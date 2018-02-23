@@ -50,8 +50,12 @@ public class Application {
 
     @Bean
     public Docket postApi() {
-        return new Docket(DocumentationType.SWAGGER_2).groupName("persons").apiInfo(apiInfo()).
-                select().paths(regex("/person.*")).build();
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("persons")
+                .apiInfo(apiInfo())
+                .select()
+                .paths(regex("/person.*"))
+                .build();
     }
 
     private ApiInfo apiInfo() {

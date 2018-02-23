@@ -9,11 +9,13 @@ import java.util.List;
  */
 public interface DummyService {
 
+    void test();
+
     /**
      *
-     * @param persion
+     * @param person
      */
-    void add(PersonView persion);
+    void add(PersonView person);
 
     /**
      * Dummy service method

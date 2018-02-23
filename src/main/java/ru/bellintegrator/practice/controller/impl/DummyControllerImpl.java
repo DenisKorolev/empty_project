@@ -31,6 +31,7 @@ public class DummyControllerImpl implements DummyController {
     @Override
     @RequestMapping(value = "/ping", method = {GET, POST})
     public String ping() {
+        dummyService.test();
         return "pong";
     }
 

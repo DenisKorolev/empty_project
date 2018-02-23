@@ -1,15 +1,18 @@
 package ru.bellintegrator.practice.model;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Человек
@@ -44,9 +47,19 @@ public class Person {
     @Column(name = "age")
     private int age;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "house_id")
-    private House house;
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
+    @JoinTable(
+            name = "Person_House",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "house_id")
+    )
+
+    private Set<House> houses;
 
     /**
      * Конструктор для hibernate
@@ -58,24 +71,6 @@ public class Person {
     public Person(String name, int age) {
         this.name = name;
         this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("{id:");
-        builder.append(getId());
-        builder.append(";name:");
-        builder.append(getName());
-        builder.append(";age:");
-        builder.append(getAge());
-        if (house != null) {
-            builder.append(";address:");
-            builder.append(house.getAddress());
-        }
-        builder.append("}");
-
-        return builder.toString();
     }
 
     public Long getId() {
@@ -98,11 +93,21 @@ public class Person {
         this.age = age;
     }
 
-    public House getHouse() {
-        return house;
+    public Set<House> getHouses() {
+        if (houses == null) {
+            houses = new HashSet<>();
+        }
+        return houses;
     }
 
-    public void setHouse(House house) {
-        this.house = house;
+    public void addHouse(House house) {
+        getHouses().add(house);
+        house.getPersons().add(this);
     }
+
+    public void removeHouse(House house) {
+        getHouses().remove(house);
+        house.getPersons().remove(this);
+    }
+
 }

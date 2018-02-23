@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.dao.PersonDAO;
+import ru.bellintegrator.practice.model.House;
 import ru.bellintegrator.practice.model.Person;
 import ru.bellintegrator.practice.service.DummyService;
 import ru.bellintegrator.practice.view.PersonView;
@@ -26,6 +27,14 @@ public class DummyServiceImpl implements DummyService {
     @Autowired
     public DummyServiceImpl(PersonDAO dao) {
         this.dao = dao;
+    }
+
+    @Transactional
+    public void test() {
+        Person person = dao.loadById(1L);
+        House house = person.getHouses().iterator().next();
+        person.removeHouse(house);
+        dao.save(person);
     }
 
     @Override
