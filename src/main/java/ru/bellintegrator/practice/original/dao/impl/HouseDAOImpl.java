@@ -1,9 +1,9 @@
-package ru.bellintegrator.practice.dao.impl;
+package ru.bellintegrator.practice.original.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.bellintegrator.practice.dao.HouseDAO;
-import ru.bellintegrator.practice.model.House;
+import ru.bellintegrator.practice.original.dao.HouseDAO;
+import ru.bellintegrator.practice.original.model.House;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
