@@ -26,16 +26,16 @@ CREATE TABLE IF NOT EXISTS Organization (
     org_id  INTEGER PRIMARY KEY AUTO_INCREMENT,
     org_name VARCHAR(50) NOT NULL,
     org_full_name VARCHAR(50) NOT NULL,
-    inn INTEGER NOT NULL,
+    org_inn INTEGER NOT NULL,
     kpp INTEGER NOT NULL,
-    address VARCHAR(50) NOT NULL,
+    org_address VARCHAR(50) NOT NULL,
     org_phone VARCHAR(50) NOT NULL,
-    is_Active BOOLEAN NOT NULL
+    is_active BOOLEAN NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Office (
     office_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    org_id INTEGER NOT NULL,
+    org_id INTEGER,
     office_name VARCHAR(50) NOT NULL,
     office_phone VARCHAR(50) NOT NULL,
     is_office_Active BOOLEAN NOT NULL
@@ -44,16 +44,16 @@ CREATE TABLE IF NOT EXISTS Office (
 CREATE INDEX IX_Organization_Office_Id ON Office (org_id);
 ALTER TABLE Office ADD FOREIGN KEY (org_id) REFERENCES Organization(org_id);
 
-CREATE TABLE IF NOT EXISTS Doc (
+CREATE TABLE IF NOT EXISTS Doc_type (
     doc_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     doc_name VARCHAR(50) NOT NULL UNIQUE,
     doc_number INTEGER NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Country (
-    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    country_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     country_name VARCHAR(50) NOT NULL UNIQUE,
-    code INTEGER NOT NULL UNIQUE
+    country_code INTEGER NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS User (
@@ -68,7 +68,6 @@ CREATE TABLE IF NOT EXISTS Worker (
     office_id INTEGER NOT NULL,
     doc_id INTEGER NOT NULL,
     citizenship_code INTEGER NOT NULL,
-
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50),

@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name = "Doc")
+@Entity(name = "Doc_type")
 public class Doc {
     @Id
     @GeneratedValue
@@ -19,26 +19,32 @@ public class Doc {
     private Long docNumber;
 
     public Long getId() {
+
         return id;
     }
 
     public String getDocName() {
+
         return docName;
     }
 
     public Long getDocNumber() {
+
         return docNumber;
     }
 
     public void setId(Long id) {
+
         this.id = id;
     }
 
     public void setDocName(String docName) {
+
         this.docName = docName;
     }
 
     public void setDocNumber(Long docNumber) {
+
         this.docNumber = docNumber;
     }
 }
