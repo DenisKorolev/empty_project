@@ -24,8 +24,8 @@ ALTER TABLE Person_House ADD FOREIGN KEY (person_id) REFERENCES Person(id);
 
 CREATE TABLE IF NOT EXISTS Organization (
     org_id  INTEGER PRIMARY KEY AUTO_INCREMENT,
-    organisation_name VARCHAR(50) NOT NULL,
-    organisation_full_name VARCHAR(50) NOT NULL,
+    org_name VARCHAR(50) NOT NULL,
+    org_full_name VARCHAR(50) NOT NULL,
     inn INTEGER NOT NULL,
     kpp INTEGER NOT NULL,
     address VARCHAR(50) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS Office (
     org_id INTEGER NOT NULL,
     office_name VARCHAR(50) NOT NULL,
     office_phone VARCHAR(50) NOT NULL,
-    is_Active BOOLEAN NOT NULL
+    is_office_Active BOOLEAN NOT NULL
 );
 
 CREATE INDEX IX_Organization_Office_Id ON Office (org_id);
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS Doc (
 );
 
 CREATE TABLE IF NOT EXISTS Country (
-    contry_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
     country_name VARCHAR(50) NOT NULL UNIQUE,
     code INTEGER NOT NULL UNIQUE
 );
