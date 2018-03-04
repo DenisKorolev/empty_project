@@ -26,6 +26,6 @@ public class PersonView {
 
     @Override
     public String toString() {
-        return "{id:" + id + ";name:" + name + ";age" + age + "}";
+        return "{id: " + id + ";name: " + name + ";age: " + age + "}";
     }
 }
