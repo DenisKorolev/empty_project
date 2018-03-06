@@ -50,13 +50,13 @@ public class Organization {
 
 
     @Column(name = "org_inn")
-    private Long inn;
+    private String inn;
 
-    public Long getInn() {
+    public String getInn() {
         return inn;
     }
 
-    public void setInn(Long inn) {
+    public void setInn(String inn) {
         this.inn = inn;
     }
 

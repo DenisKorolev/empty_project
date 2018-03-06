@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS Organization (
     org_id  INTEGER PRIMARY KEY AUTO_INCREMENT,
     org_name VARCHAR(50) NOT NULL,
     org_full_name VARCHAR(50) NOT NULL,
-    org_inn INTEGER NOT NULL,
+    org_inn VARCHAR(12) NOT NULL,
     kpp INTEGER NOT NULL,
     org_address VARCHAR(50) NOT NULL,
     org_phone VARCHAR(50) NOT NULL,
@@ -60,7 +60,9 @@ CREATE TABLE IF NOT EXISTS User (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     login VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(50) NOT NULL,
-    user_name VARCHAR(50) NOT NULL UNIQUE
+    user_name VARCHAR(50) NOT NULL,
+    is_user_active BOOLEAN NOT NULL,
+    activation_hash VARCHAR(50) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Worker (
