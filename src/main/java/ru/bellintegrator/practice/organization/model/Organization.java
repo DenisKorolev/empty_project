@@ -1,6 +1,10 @@
 package ru.bellintegrator.practice.organization.model;
 
+import ru.bellintegrator.practice.office.model.Office;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Organization")
@@ -24,7 +28,33 @@ public class Organization {
     @Version
     private Integer version;
 
+    /**
+     * Bidirectional OneToMany relationship with Office table
+     */
+    @OneToMany(mappedBy = "organization", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Office> offices;
 
+    public List<Office> getOffices() {
+        if (offices == null){
+            offices = new ArrayList<>();
+        }
+        return offices;
+    }
+
+    public void addOffice(Office office){
+        offices.add(office);
+        office.setOrganization(this);
+    }
+
+    public void removeOffice(Office office){
+        offices.remove(office);
+        office.setOrganization(null);
+    }
+
+    /**
+     * Short organization name
+     */
+    @Basic(optional = false)
     @Column(name = "org_name")
     private String orgName;
 
@@ -37,6 +67,10 @@ public class Organization {
     }
 
 
+    /**
+     * Full organization name
+     */
+    @Basic(optional = false)
     @Column(name = "org_full_name")
     private String orgFullName;
 
@@ -49,6 +83,10 @@ public class Organization {
     }
 
 
+    /**
+     * INN
+     */
+    @Basic(optional = false)
     @Column(name = "org_inn")
     private String inn;
 
@@ -61,6 +99,10 @@ public class Organization {
     }
 
 
+    /**
+     * KPP
+     */
+    @Basic(optional = false)
     @Column(name = "kpp")
     private Long kpp;
 
@@ -73,6 +115,10 @@ public class Organization {
     }
 
 
+    /**
+     * Address of organization
+     */
+    @Basic(optional = false)
     @Column(name = "org_address")
     private String address;
 
@@ -85,6 +131,10 @@ public class Organization {
     }
 
 
+    /**
+     * Company phone number
+     */
+    @Basic(optional = false)
     @Column(name = "org_phone")
     private String phoneNumber;
 
@@ -97,6 +147,10 @@ public class Organization {
     }
 
 
+    /**
+     * Field that identifies whether company is active or not
+     */
+    @Basic(optional = false)
     @Column(name = "is_active")
     private Boolean isActive;
 

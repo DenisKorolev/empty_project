@@ -31,7 +31,9 @@ public class Worker {
     private Integer version;
 
 
-    //office_id @ Office
+    /**
+     * Bidirectional ManyToOne relationship with Office table
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "office_id")
     private Office office;

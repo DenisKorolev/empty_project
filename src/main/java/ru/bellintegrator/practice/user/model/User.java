@@ -70,6 +70,7 @@ public class User {
         this.userName = userName;
     }
 
+
     /**
      * Field to identify whether user was verified after registration or not
      */
