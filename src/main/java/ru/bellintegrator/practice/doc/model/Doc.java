@@ -14,7 +14,7 @@ public class Doc {
     private String docName;
 
     @Column(name = "doc_number", unique = true)
-    private Long docNumber;
+    private String docNumber;
 
     public Long getId() {
 
@@ -26,7 +26,7 @@ public class Doc {
         return docName;
     }
 
-    public Long getDocNumber() {
+    public String getDocNumber() {
 
         return docNumber;
     }
@@ -41,7 +41,7 @@ public class Doc {
         this.docName = docName;
     }
 
-    public void setDocNumber(Long docNumber) {
+    public void setDocNumber(String docNumber) {
 
         this.docNumber = docNumber;
     }
