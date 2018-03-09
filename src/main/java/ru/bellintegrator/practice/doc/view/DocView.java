@@ -4,17 +4,17 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class DocView {
     @ApiModelProperty(hidden = true)
-    public long id;
+    public String id;
 
     public String docName;
 
-    public long docNumber;
+    public String docNumber;
 
     public DocView (){
 
     }
 
-    public DocView (String docName, long docNumber){
+    public DocView (String docName, String docNumber){
         this.docName = docName;
         this.docNumber = docNumber;
     }

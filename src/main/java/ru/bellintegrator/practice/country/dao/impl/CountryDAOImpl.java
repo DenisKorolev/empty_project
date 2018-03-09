@@ -20,7 +20,7 @@ public class CountryDAOImpl implements CountryDAO{
 
     @Override
     public List<Country> all(){
-        TypedQuery<Country> query = em.createQuery("SELECT d FROM Country d", Country.class);
+        TypedQuery<Country> query = em.createQuery("SELECT c FROM Country c", Country.class);
         return query.getResultList();
     }
 

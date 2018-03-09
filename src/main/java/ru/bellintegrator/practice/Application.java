@@ -9,6 +9,7 @@ import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import ru.bellintegrator.practice.country.dao.impl.CountryDAOImpl;
 import ru.bellintegrator.practice.original.controller.impl.DummyControllerImpl;
 import ru.bellintegrator.practice.original.dao.impl.PersonDAOImpl;
 import ru.bellintegrator.practice.original.service.impl.DummyServiceImpl;
@@ -25,7 +26,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableSwagger2
 @ImportResource("spring_mvc_config.xml")
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {DummyControllerImpl.class, DummyServiceImpl.class, PersonDAOImpl.class})
+@ComponentScan(basePackageClasses = {DummyControllerImpl.class, DummyServiceImpl.class, PersonDAOImpl.class, CountryDAOImpl.class})
 public class Application {
 
     public static void main(String[] args) {

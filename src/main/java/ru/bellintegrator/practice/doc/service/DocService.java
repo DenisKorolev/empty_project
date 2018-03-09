@@ -6,9 +6,5 @@ import java.util.List;
 
 public interface DocService {
 
-    void test();
-
-    void add(DocView doc);
-
     List<DocView> docs();
 }

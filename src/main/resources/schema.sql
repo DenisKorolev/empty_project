@@ -46,7 +46,7 @@ ALTER TABLE Office ADD FOREIGN KEY (org_id) REFERENCES Organization(org_id);
 
 CREATE TABLE IF NOT EXISTS Doc_type (
     doc_id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    doc_name VARCHAR(50) NOT NULL UNIQUE,
+    doc_name VARCHAR(200) NOT NULL UNIQUE,
     doc_number INTEGER NOT NULL UNIQUE
 );
 
@@ -79,5 +79,5 @@ CREATE TABLE IF NOT EXISTS Worker (
     is_identified BOOLEAN NOT NULL
 );
 
-CREATE INDEX IX_Doc_User_Id  ON User(doc_id);
-ALTER TABLE User ADD FOREIGN KEY (doc_id) REFERENCES Doc(doc_id);
+CREATE INDEX IX_Doc_User_Id  ON Worker(doc_id);
+ALTER TABLE Worker ADD FOREIGN KEY (doc_id) REFERENCES Doc_type(doc_id);
