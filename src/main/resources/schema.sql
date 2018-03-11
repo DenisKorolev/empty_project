@@ -24,6 +24,7 @@ ALTER TABLE Person_House ADD FOREIGN KEY (person_id) REFERENCES Person(id);
 
 CREATE TABLE IF NOT EXISTS Organization (
     org_id  INTEGER PRIMARY KEY AUTO_INCREMENT,
+    version INTEGER NOT NULL,
     org_name VARCHAR(50) NOT NULL,
     org_full_name VARCHAR(50) NOT NULL,
     org_inn VARCHAR(12) NOT NULL,
@@ -35,6 +36,7 @@ CREATE TABLE IF NOT EXISTS Organization (
 
 CREATE TABLE IF NOT EXISTS Office (
     office_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    version INTEGER NOT NULL,
     org_id INTEGER,
     office_name VARCHAR(50) NOT NULL,
     office_phone VARCHAR(50) NOT NULL,
@@ -46,18 +48,21 @@ ALTER TABLE Office ADD FOREIGN KEY (org_id) REFERENCES Organization(org_id);
 
 CREATE TABLE IF NOT EXISTS Doc_type (
     doc_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    version INTEGER NOT NULL,
     doc_name VARCHAR(200) NOT NULL UNIQUE,
     doc_number VARCHAR(2) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Country (
     country_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    version INTEGER NOT NULL,
     country_name VARCHAR(50) NOT NULL UNIQUE,
     country_code INTEGER NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS User (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    version INTEGER NOT NULL,
     login VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(50) NOT NULL,
     user_name VARCHAR(50) NOT NULL,
@@ -67,6 +72,7 @@ CREATE TABLE IF NOT EXISTS User (
 
 CREATE TABLE IF NOT EXISTS Worker (
     user_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    version INTEGER NOT NULL,
     office_id INTEGER NOT NULL,
     doc_id INTEGER NOT NULL,
     citizenship_code INTEGER NOT NULL,

@@ -34,6 +34,6 @@ public class CountryDAOTest {
     @Test
     public void loadById() {
         System.out.println("Test 2");
-
+        Country  country = countryDAO.loadById(new Long(1));
     }
 }
