@@ -26,33 +26,26 @@ public interface OfficeDAO {
      * @param orgId Organization id
      * @return
      */
-    Office loadByOrgId(Long orgId);
+    Office loadByOrgId(Long orgId, String officeName, String officePhone, Boolean isOfficeActive);
 
 
     /**
-     * Updates Office in DB by id
-     * @param id Office id
-     * @param officeName Office name
-     * @param officeAddress Office address
-     * @param officePhone Office phone
-     * @param isOfficeActive Is Office Active parameter
+     * Updates Office in DB
+     * @param office Office object to update
      */
-    void updateById(Long id, String officeName, String officeAddress, String officePhone, Boolean isOfficeActive);
+    void updateById(Office office);
 
 
     /**
-     * Deletes Office from DB by id
-     * @param id Office id
+     * Deletes Office from DB
+     * @param office Office object to delete
      */
-    void deleteById(Long id);
+    void deleteById(Office office);
 
 
     /**
      * Adds Office to DB
-     * @param officeName Office name
-     * @param officeAddress Office address
-     * @param officePhone Office phone
-     * @param isOfficeActive Is Office Active parameter
+     * @param office Office object to add
      */
-    void save(String officeName, String officeAddress, String officePhone, Boolean isOfficeActive);
+    void save(Office office);
 }
