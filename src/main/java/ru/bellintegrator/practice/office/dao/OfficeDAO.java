@@ -22,11 +22,11 @@ public interface OfficeDAO {
 
 
     /**
-     * Gets Office object by Organization id
-     * @param orgId Organization id
-     * @return
+     * Filters Office objects by Organization id and other parameters
+     * @param office Office object to filter
+     * @return List of Office objects if any
      */
-    Office loadByOrgId(Long orgId, String officeName, String officePhone, Boolean isOfficeActive);
+    List<Office> filterByOrgId(Office office);
 
 
     /**

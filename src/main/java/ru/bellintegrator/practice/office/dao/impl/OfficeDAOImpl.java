@@ -49,21 +49,21 @@ public class OfficeDAOImpl implements OfficeDAO{
      * {@inheritDoc}
      */
     @Override
-    public Office loadByOrgId(Long orgId, String officeName, String officePhone, Boolean isOfficeActive) {
+    public List<Office> filterByOrgId(Office officeEntity) {
 
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<Office> criteria = builder.createQuery(Office.class);
 
         Root<Office> office = criteria.from(Office.class);
         criteria.where(builder.and(
-                builder.equal(office.join("organization").get("id"), orgId)),
-                builder.equal(office.get("officeName"), officeName),
-                builder.equal(office.get("officePhone"), officePhone),
-                builder.equal(office.get("isOfficeActive"), isOfficeActive)
+                builder.equal(office.join("organization").get("id"), officeEntity.getOrganization().getId())),
+                builder.equal(office.get("officeName"), officeEntity.getOfficeName()),
+                builder.equal(office.get("officePhone"), officeEntity.getOfficePhone()),
+                builder.equal(office.get("isOfficeActive"), officeEntity.getOfficeActive())
         );
 
         TypedQuery<Office> query = em.createQuery(criteria);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
 
