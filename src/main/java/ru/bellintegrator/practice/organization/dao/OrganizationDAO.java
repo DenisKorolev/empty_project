@@ -7,53 +7,38 @@ import java.util.List;
 
 public interface OrganizationDAO {
     /**
-     * Filters Organization objects
-     * @param orgName Organization name
-     * @param inn Organization inn
-     * @param isOrgActive Is Organization Active parameter
+     * Filters Organization objects by name and other parameters
+     * @param organization Organization name
      * @return List of Organization objects if any
      */
-    List<Organization> filter(String orgName, String inn, Boolean isOrgActive);
+    List<Organization> filterByName(Organization organization);
 
 
     /**
-     * Gets office object by id
+     * Gets organization object by id
      * @param id Organization id
      * @return Office object if any
      */
-    Office loadById(Long id);
+    Organization loadById(Long id);
 
 
     /**
-     * Updates Organization in DB by id
-     * @param id Organization id
-     * @param orgName Organization name
-     * @param orgFullName Organization full name
-     * @param inn Organization inn
-     * @param kpp Organization kpp
-     * @param orgAddress Organization address
-     * @param orgPhone Organization phone
-     * @param isOrgActive Is Organization Active parameter
+     * Updates Organization in DB
+     * @param organization Organization object to update
      */
-    void updateById(Long id, String orgName, String orgFullName, String inn, String kpp, String orgAddress, String orgPhone, Boolean isOrgActive);
+    void updateById(Organization organization);
 
 
     /**
      * Adds Organization to DB
-     * @param orgName
-     * @param orgFullName
-     * @param inn
-     * @param kpp
-     * @param orgAddress
-     * @param orgPhone
-     * @param isOrgActive
+     * @param organization Organization object to add
      */
-    void save(String orgName, String orgFullName, String inn, String kpp, String orgAddress, String orgPhone, Boolean isOrgActive);
+    void save(Organization organization);
 
 
     /**
-     * Deletes Organization from DB by id
-     * @param id Organization id
+     * Deletes Organization from DB
+     * @param organization Office object to delete
      */
-    void deleteById(Long id);
+    void deleteById(Organization organization);
 }
