@@ -19,8 +19,8 @@ public interface UserDAO {
 
     /**
      * Gets User object by login and password
-     * @param login
-     * @param password
+     * @param login User login
+     * @param password User password
      * @return User object if any
      */
     public User loadByAccount(String login, String password);
