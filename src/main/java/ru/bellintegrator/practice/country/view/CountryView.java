@@ -19,6 +19,6 @@ public class CountryView {
 
     @Override
     public String toString(){
-        return "{name:" + countryName + "; code:"+countryCode;
+        return "{name:" + countryName + "; code:" + countryCode + "}";
     }
 }

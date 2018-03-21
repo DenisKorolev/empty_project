@@ -21,6 +21,6 @@ public class DocView {
 
     @Override
     public String toString(){
-        return "{id: " + id + "; name: "+ docName + "; code: " + docNumber + "}";
+        return "{name:"+ docName + "; code:" + docNumber + "}";
     }
 }
