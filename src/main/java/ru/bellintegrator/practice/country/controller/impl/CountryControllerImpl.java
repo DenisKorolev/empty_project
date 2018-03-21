@@ -1,4 +1,4 @@
-package ru.bellintegrator.practice.country.controller;
+package ru.bellintegrator.practice.country.controller.impl;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import ru.bellintegrator.practice.country.controller.CountryController;
 import ru.bellintegrator.practice.country.model.Country;
 import ru.bellintegrator.practice.country.service.CountryService;
 import ru.bellintegrator.practice.country.view.CountryView;

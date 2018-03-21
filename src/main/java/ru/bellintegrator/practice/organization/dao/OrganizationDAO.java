@@ -17,7 +17,7 @@ public interface OrganizationDAO {
     /**
      * Gets organization object by id
      * @param id Organization id
-     * @return Office object if any
+     * @return Organization object if any
      */
     Organization loadById(Long id);
 
