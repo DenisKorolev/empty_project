@@ -33,6 +33,7 @@ public interface OfficeDAO {
      * Updates Office in DB
      * @param office Office object to update
      */
+    @Deprecated
     void updateById(Office office);
 
 
