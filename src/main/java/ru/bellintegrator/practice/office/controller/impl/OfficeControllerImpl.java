@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.practice.office.controller.OfficeController;
 import ru.bellintegrator.practice.office.service.OfficeService;
 import ru.bellintegrator.practice.office.view.OfficeFilterView;
+import ru.bellintegrator.practice.office.view.OfficeIdView;
 import ru.bellintegrator.practice.office.view.OfficeView;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public class OfficeControllerImpl implements OfficeController {
     @Override
     @ApiOperation(value = "Adds new Office", httpMethod = "POST")
     @RequestMapping(value = "/create", method = {POST})
-    public void save(OfficeView officeView) {
-
+    public void save(@RequestBody OfficeIdView officeView) {
+        officeService.save(officeView);
     }
 }

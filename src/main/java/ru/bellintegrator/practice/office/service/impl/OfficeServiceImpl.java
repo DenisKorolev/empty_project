@@ -11,6 +11,7 @@ import ru.bellintegrator.practice.office.dao.OfficeDAO;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.office.service.OfficeService;
 import ru.bellintegrator.practice.office.view.OfficeFilterView;
+import ru.bellintegrator.practice.office.view.OfficeIdView;
 import ru.bellintegrator.practice.office.view.OfficeView;
 import ru.bellintegrator.practice.organization.model.Organization;
 
@@ -68,7 +69,7 @@ public class OfficeServiceImpl implements OfficeService {
         Office office = dao.loadById(id);
 
         OfficeView view = new OfficeView(office.getId().toString(), office.getOrganization().getId().toString(),
-                office.getOfficeName(), office.getOrganization().getAddress(), office.getOfficePhone(), office.getOfficeActive());
+                office.getOfficeName(), office.getOfficeAddress(), office.getOfficePhone(), office.getOfficeActive());
 
         log.info(view.toString());
 
@@ -86,15 +87,49 @@ public class OfficeServiceImpl implements OfficeService {
         if (!officeView.getName().isEmpty())
             office.setOfficeName(officeView.getName());
         if (!officeView.getAddress().isEmpty())
-            office.getOrganization().setAddress(officeView.getAddress());
+            office.setOfficeAddress(officeView.getAddress());
         if (!officeView.getPhone().isEmpty())
             office.setOfficePhone(officeView.getPhone());
         office.setOfficeActive(officeView.getIsActive());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
+    @Transactional
     public void deleteById(Long id) {
         Office office = dao.loadById(id);
         dao.deleteById(office);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public OfficeIdView save(OfficeIdView officeView) {
+        Office office = new Office();
+        Organization org = new Organization();
+
+        //Obligatory part
+        //Set Office name
+        office.setOfficeName(officeView.getName());
+        //Set orgId
+        org.setId(officeView.getOrgId());
+        office.setOrganization(org);
+        //Set Office address
+        office.setOfficeAddress(officeView.getAddress());
+
+        //Optional part
+        //Set Office phone
+        office.setOfficePhone(officeView.getPhone());
+        //Set Office isActive
+        office.setOfficeActive(officeView.getActive());
+
+        dao.save(office);
+
+        officeView.setId(office.getId());
+        return officeView;
     }
 }

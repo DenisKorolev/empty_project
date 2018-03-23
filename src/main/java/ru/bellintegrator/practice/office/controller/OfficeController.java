@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.office.view.OfficeFilterView;
+import ru.bellintegrator.practice.office.view.OfficeIdView;
 import ru.bellintegrator.practice.office.view.OfficeView;
 
 import java.util.List;
@@ -40,5 +41,5 @@ public interface OfficeController {
      * Adds Office to DB
      * @param officeView Office view object to map request fields
      */
-    void save(@RequestBody OfficeView officeView);
+    void save(@RequestBody OfficeIdView officeView);
 }
