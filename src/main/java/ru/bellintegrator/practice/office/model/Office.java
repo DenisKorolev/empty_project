@@ -73,6 +73,21 @@ public class Office {
 
 
     /**
+     * Office address
+     */
+    @Basic(optional = false)
+    @Column(name = "office_address")
+    private String officeAddress;
+
+    public String getOfficeAddress(){
+        return officeAddress;
+    }
+
+    public void setOfficeAddress(String officeAddress){
+        this.officeAddress = officeAddress;
+    }
+
+    /**
      * Office name
      */
     @Basic(optional = false)

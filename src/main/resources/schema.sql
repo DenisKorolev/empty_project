@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS Office (
     office_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     version INTEGER NOT NULL,
     org_id INTEGER,
+    office_address VARCHAR(50) NOT NULL,
     office_name VARCHAR(50) NOT NULL,
     office_phone VARCHAR(50) NOT NULL,
     is_office_Active BOOLEAN NOT NULL
