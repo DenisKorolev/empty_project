@@ -9,7 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -32,12 +34,33 @@ public class OrganizationDAOImpl implements OrganizationDAO {
         CriteriaQuery<Organization> criteria = builder.createQuery(Organization.class);
 
         Root<Organization> organization = criteria.from(Organization.class);
-        criteria.where(builder.and(
-                builder.equal(organization.get("orgName"), orgEntity.getOrgName()),
-                builder.equal(organization.get("inn"), orgEntity.getInn()),
-                builder.equal(organization.get("isActive"), orgEntity.getActive())
-                )
-        );
+
+        List<Predicate> predicates = new ArrayList();
+        //Org inn
+        if (!orgEntity.getInn().isEmpty())
+            predicates.add(
+                    builder.equal(organization.get("inn"), orgEntity.getInn())
+            );
+        //Is Org active
+        if (!(orgEntity.getActive() == null))
+            predicates.add(
+                    builder.equal(organization.get("isActive"), orgEntity.getActive())
+            );
+
+        //Org name
+        if (predicates.isEmpty())
+            criteria.where(
+                    builder.equal(organization.get("orgName"), orgEntity.getOrgName())
+            );
+        else {
+            predicates.add(
+                    builder.equal(organization.get("orgName"), orgEntity.getOrgName())
+            );
+            criteria.where(builder.and(
+                    predicates.toArray(new Predicate[predicates.size()])
+                    )
+            );
+        }
 
         TypedQuery<Organization> query = em.createQuery(criteria);
         return query.getResultList();

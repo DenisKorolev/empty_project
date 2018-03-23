@@ -12,7 +12,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -55,12 +57,40 @@ public class OfficeDAOImpl implements OfficeDAO{
         CriteriaQuery<Office> criteria = builder.createQuery(Office.class);
 
         Root<Office> office = criteria.from(Office.class);
-        criteria.where(builder.and(
-                builder.equal(office.join("organization").get("id"), officeEntity.getOrganization().getId())),
-                builder.equal(office.get("officeName"), officeEntity.getOfficeName()),
-                builder.equal(office.get("officePhone"), officeEntity.getOfficePhone()),
-                builder.equal(office.get("isOfficeActive"), officeEntity.getOfficeActive())
-        );
+
+        List<Predicate> predicates = new ArrayList<Predicate>();
+        //Office name
+        if (!officeEntity.getOfficeName().isEmpty())
+            predicates.add(
+                    builder.equal(office.get("officeName"), officeEntity.getOfficeName())
+            );
+        //Office phone
+        if (!officeEntity.getOfficePhone().isEmpty())
+            predicates.add(
+                    builder.equal(office.get("officePhone"), officeEntity.getOfficePhone())
+            );
+        //Is Office active
+        if (!(officeEntity.getOfficeActive() == null))
+            predicates.add(
+                    builder.equal(office.get("isOfficeActive"), officeEntity.getOfficeActive())
+            );
+
+        //Org id
+        if (predicates.isEmpty()) {
+            criteria.where(
+                    builder.equal(office.join("organization").get("id"), officeEntity.getOrganization().getId())
+            );
+        }
+        else {
+            predicates.add(
+                    builder.equal(office.join("organization").get("id"), officeEntity.getOrganization().getId())
+            );
+            criteria.where(builder.and(
+                        predicates.toArray(new Predicate[predicates.size()])
+                    )
+            );
+        }
+
 
         TypedQuery<Office> query = em.createQuery(criteria);
         return query.getResultList();
