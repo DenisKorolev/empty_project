@@ -1,10 +1,10 @@
 package ru.bellintegrator.practice.doc.controller;
 
-import ru.bellintegrator.practice.doc.model.Doc;
+import ru.bellintegrator.practice.doc.view.DocView;
 
 import java.util.List;
 
 public interface DocController {
 
-    List<Doc> docs();
+    List<DocView> docs();
 }
