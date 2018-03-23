@@ -36,7 +36,7 @@ public class CountryServiceImpl implements CountryService {
         List<CountryView> countries = new ArrayList<>();
 
         for (Country country:all) {
-            CountryView view = new CountryView(country.getCountryName(), country.getCountryCode());
+            CountryView view = new CountryView(country.getCountryName(), country.getCountryCode().toString());
             countries.add(view);
 
             log.info(view.toString());
