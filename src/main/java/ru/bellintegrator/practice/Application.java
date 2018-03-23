@@ -24,9 +24,7 @@ import java.util.Locale;
 import static springfox.documentation.builders.PathSelectors.regex;
 
 @EnableSwagger2
-@ImportResource("spring_mvc_config.xml")
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {DummyControllerImpl.class, DummyServiceImpl.class, PersonDAOImpl.class, CountryDAOImpl.class})
 public class Application {
 
     public static void main(String[] args) {
@@ -35,27 +33,12 @@ public class Application {
     }
 
     @Bean
-    public TaskExecutor controllerPool() {
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setMaxPoolSize(Runtime.getRuntime().availableProcessors() + 1);
-        executor.setQueueCapacity(25);
-        return executor;
-    }
-
-    @Bean
-    public LocaleResolver localeResolver() {
-        SessionLocaleResolver sessionLocaleResolver = new SessionLocaleResolver();
-        sessionLocaleResolver.setDefaultLocale(Locale.US);
-        return sessionLocaleResolver;
-    }
-
-    @Bean
     public Docket postApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("persons")
+                .groupName("all")
                 .apiInfo(apiInfo())
                 .select()
-                .paths(regex("/person.*"))
+                .paths(regex("/api.*"))
                 .build();
     }
 
