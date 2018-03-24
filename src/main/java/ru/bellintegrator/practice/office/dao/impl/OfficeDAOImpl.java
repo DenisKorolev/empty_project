@@ -58,14 +58,14 @@ public class OfficeDAOImpl implements OfficeDAO{
 
         Root<Office> office = criteria.from(Office.class);
 
-        List<Predicate> predicates = new ArrayList<Predicate>();
+        List<Predicate> predicates = new ArrayList<>();
         //Office name
-        if (!officeEntity.getOfficeName().isEmpty())
+        if ((officeEntity.getOfficeName() != null) && (!officeEntity.getOfficeName().isEmpty()))
             predicates.add(
                     builder.equal(office.get("officeName"), officeEntity.getOfficeName())
             );
         //Office phone
-        if (!officeEntity.getOfficePhone().isEmpty())
+        if ((officeEntity.getOfficePhone() != null) && (!officeEntity.getOfficePhone().isEmpty()))
             predicates.add(
                     builder.equal(office.get("officePhone"), officeEntity.getOfficePhone())
             );

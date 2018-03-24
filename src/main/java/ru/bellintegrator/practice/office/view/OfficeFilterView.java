@@ -1,15 +1,20 @@
 package ru.bellintegrator.practice.office.view;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.swagger.annotations.ApiModelProperty;
 
 public class OfficeFilterView {
+    @JsonPropertyOrder(value = "1")
     public String orgId;
 
+    @JsonPropertyOrder(value = "2")
     public String name;
 
+    @JsonPropertyOrder(value = "3")
     public String phone;
 
-    public boolean isActive;
+    @JsonPropertyOrder(value = "4")
+    public Boolean isActive;
 
     @ApiModelProperty(hidden = true)
     public String id;
@@ -34,4 +39,5 @@ public class OfficeFilterView {
         return "{id:" + id + "; name:" + organizationName + "; organizationName:" + organizationName + "; isActive:" +
                 isActive + "}";
     }
+
 }
