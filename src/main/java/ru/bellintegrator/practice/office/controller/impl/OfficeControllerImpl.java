@@ -6,10 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.practice.office.controller.OfficeController;
 import ru.bellintegrator.practice.office.service.OfficeService;
-import ru.bellintegrator.practice.office.view.OfficeFilterOutView;
-import ru.bellintegrator.practice.office.view.OfficeFilterView;
-import ru.bellintegrator.practice.office.view.OfficeIdView;
-import ru.bellintegrator.practice.office.view.OfficeView;
+import ru.bellintegrator.practice.office.view.*;
 
 import java.util.List;
 
@@ -74,7 +71,7 @@ public class OfficeControllerImpl implements OfficeController {
     @Override
     @ApiOperation(value = "Adds new Office", httpMethod = "POST")
     @RequestMapping(value = "/create", method = {POST})
-    public void save(@RequestBody OfficeIdView officeView) {
-        officeService.save(officeView);
+    public OfficeIdOutView save(@RequestBody OfficeIdView officeView) {
+        return officeService.save(officeView);
     }
 }

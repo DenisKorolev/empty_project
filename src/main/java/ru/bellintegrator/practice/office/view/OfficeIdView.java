@@ -17,7 +17,7 @@ public class OfficeIdView {
     /**
      * Organization id
      */
-    private Long orgId;
+    private String orgId;
 
     /**
      * Office address
@@ -70,11 +70,11 @@ public class OfficeIdView {
         this.id = id;
     }
 
-    public Long getOrgId() {
+    public String getOrgId() {
         return orgId;
     }
 
-    public void setOrgId(Long orgId) {
+    public void setOrgId(String orgId) {
         this.orgId = orgId;
     }
 

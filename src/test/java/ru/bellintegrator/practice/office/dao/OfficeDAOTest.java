@@ -11,6 +11,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.Application;
 import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.organization.dao.OrganizationDAO;
 import ru.bellintegrator.practice.organization.model.Organization;
 
 import java.util.List;
@@ -26,6 +27,9 @@ public class OfficeDAOTest {
 
     @Autowired
     private OfficeDAO officeDAO;
+
+    @Autowired
+    private OrganizationDAO orgDAO;
 
     @Test
     public void filterByOrgId() {
@@ -49,8 +53,7 @@ public class OfficeDAOTest {
 
     @Test
     public void save(){
-        Organization org = new Organization();
-        org.setId(2L);
+        Organization org = orgDAO.loadById(2L);
 
         Office office = new Office();
         office.setOrganization(org);

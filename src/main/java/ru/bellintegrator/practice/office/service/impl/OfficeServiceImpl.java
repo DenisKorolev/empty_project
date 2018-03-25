@@ -10,10 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.office.dao.OfficeDAO;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.office.service.OfficeService;
-import ru.bellintegrator.practice.office.view.OfficeFilterOutView;
-import ru.bellintegrator.practice.office.view.OfficeFilterView;
-import ru.bellintegrator.practice.office.view.OfficeIdView;
-import ru.bellintegrator.practice.office.view.OfficeView;
+import ru.bellintegrator.practice.office.view.*;
 import ru.bellintegrator.practice.organization.dao.OrganizationDAO;
 import ru.bellintegrator.practice.organization.dao.impl.OrganizationDAOImpl;
 import ru.bellintegrator.practice.organization.model.Organization;
@@ -29,11 +26,12 @@ public class OfficeServiceImpl implements OfficeService {
 
     private final OfficeDAO dao;
 
-    //private final OrganizationDAO orgDAO;
+    private final OrganizationDAO orgDAO;
 
     @Autowired
-    public OfficeServiceImpl(OfficeDAO dao){
+    public OfficeServiceImpl(OfficeDAO dao, OrganizationDAO orgDAO){
         this.dao = dao;
+        this.orgDAO = orgDAO;
     }
 
 
@@ -115,16 +113,15 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public OfficeIdView save(OfficeIdView officeView) {
+    public OfficeIdOutView save(OfficeIdView officeView) {
         Office office = new Office();
 
-        Organization org = new Organization();
+        Organization org = orgDAO.loadById(Long.parseLong(officeView.getOrgId()));
 
         //Obligatory part
         //Set Office name
         office.setOfficeName(officeView.getName());
         //Set orgId
-        org.setId(officeView.getOrgId());
         office.setOrganization(org);
         //Set Office address
         office.setOfficeAddress(officeView.getAddress());
@@ -137,7 +134,8 @@ public class OfficeServiceImpl implements OfficeService {
 
         dao.save(office);
 
+        OfficeIdOutView outView = new OfficeIdOutView(office.getId().toString());
         officeView.setId(office.getId());
-        return officeView;
+        return outView;
     }
 }
