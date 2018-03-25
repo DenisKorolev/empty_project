@@ -37,7 +37,7 @@ public class OrganizationDAOImpl implements OrganizationDAO {
 
         List<Predicate> predicates = new ArrayList();
         //Org inn
-        if (!orgEntity.getInn().isEmpty())
+        if ((orgEntity.getInn() != null) && (!orgEntity.getInn().isEmpty()))
             predicates.add(
                     builder.equal(organization.get("inn"), orgEntity.getInn())
             );
@@ -46,6 +46,7 @@ public class OrganizationDAOImpl implements OrganizationDAO {
             predicates.add(
                     builder.equal(organization.get("isActive"), orgEntity.getActive())
             );
+
 
         //Org name
         if (predicates.isEmpty())
