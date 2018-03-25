@@ -104,13 +104,13 @@ public class Organization {
      */
     @Basic(optional = false)
     @Column(name = "kpp")
-    private Long kpp;
+    private String kpp;
 
-    public Long getKpp() {
+    public String getKpp() {
         return kpp;
     }
 
-    public void setKpp(Long kpp) {
+    public void setKpp(String kpp) {
         this.kpp = kpp;
     }
 

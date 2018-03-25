@@ -63,7 +63,7 @@ INSERT INTO Organization VALUES (2, 0, 'Майки', 'ООО Майки', '12357
 
 INSERT INTO Organization VALUES (3, 0, 'Яблоко', 'ООО Яблоко', '143435745', '565767521', 'ул. Центральная, 109', '+7915321743', TRUE);
 
-INSERT INTO Organization VALUES (4, 0, 'РиК', 'Рога и копыта', '141745745', '1377567521', 'ул. Тёмная, 1', '+79156548743', FALSE);
+INSERT INTO Organization VALUES (4, 0, 'РиК', 'Рога и копыта', '141745745', '137756752', 'ул. Тёмная, 1', '+79156548743', FALSE);
 
 
 INSERT INTO Office (office_id, version, org_id, office_address, office_name, office_phone, is_office_active)
