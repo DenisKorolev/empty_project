@@ -37,4 +37,31 @@ public class OfficeDAOTest {
         List<Office> offices = officeDAO.filterByOrgId(office);
         Assert.assertEquals(3, offices.size());
     }
+
+    @Test
+    public void deleteById(){
+        Office office = officeDAO.loadById(2L);
+        officeDAO.deleteById(office);
+
+        List<Office> offices = officeDAO.all();
+        Assert.assertEquals(4, offices.size());
+    }
+
+    @Test
+    public void save(){
+        Organization org = new Organization();
+        org.setId(2L);
+
+        Office office = new Office();
+        office.setOrganization(org);
+        office.setOfficeName("Test office");
+        office.setOfficeAddress("Test address");
+        office.setOfficePhone("Test phone");
+        office.setOfficeActive(true);
+
+        officeDAO.save(office);
+
+        List<Office> offices = officeDAO.all();
+        Assert.assertEquals(6, offices.size());
+    }
 }

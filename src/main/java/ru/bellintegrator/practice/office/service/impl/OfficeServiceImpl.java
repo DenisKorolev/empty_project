@@ -10,9 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.office.dao.OfficeDAO;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.office.service.OfficeService;
+import ru.bellintegrator.practice.office.view.OfficeFilterOutView;
 import ru.bellintegrator.practice.office.view.OfficeFilterView;
 import ru.bellintegrator.practice.office.view.OfficeIdView;
 import ru.bellintegrator.practice.office.view.OfficeView;
+import ru.bellintegrator.practice.organization.dao.OrganizationDAO;
+import ru.bellintegrator.practice.organization.dao.impl.OrganizationDAOImpl;
 import ru.bellintegrator.practice.organization.model.Organization;
 
 import java.util.ArrayList;
@@ -26,17 +29,21 @@ public class OfficeServiceImpl implements OfficeService {
 
     private final OfficeDAO dao;
 
+    //private final OrganizationDAO orgDAO;
+
     @Autowired
     public OfficeServiceImpl(OfficeDAO dao){
         this.dao = dao;
     }
+
+
 
     /**
      * {@inheritDoc}
      */
     @Override
     @Transactional
-    public List<OfficeFilterView> filterByOrgId(OfficeFilterView officeView) {
+    public List<OfficeFilterOutView> filterByOrgId(OfficeFilterView officeView) {
         Organization organization = new Organization();
         organization.setId(Long.parseLong(officeView.orgId));
 
@@ -47,10 +54,10 @@ public class OfficeServiceImpl implements OfficeService {
         office.setOfficeActive(officeView.isActive);
 
         List<Office> all = dao.filterByOrgId(office);
-        List<OfficeFilterView> officeViews = new ArrayList<>();
+        List<OfficeFilterOutView> officeViews = new ArrayList<>();
 
         for (Office officeLoop:all) {
-            OfficeFilterView view = new OfficeFilterView(officeLoop.getId().toString(), officeLoop.getOfficeName(),
+            OfficeFilterOutView view = new OfficeFilterOutView(officeLoop.getId().toString(), officeLoop.getOfficeName(),
                     officeLoop.getOrganization().getOrgName(), officeLoop.getOfficeActive());
             officeViews.add(view);
 
@@ -110,6 +117,7 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional
     public OfficeIdView save(OfficeIdView officeView) {
         Office office = new Office();
+
         Organization org = new Organization();
 
         //Obligatory part

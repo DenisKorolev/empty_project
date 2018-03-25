@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS Worker (
     version INTEGER NOT NULL,
     office_id INTEGER NOT NULL,
     doc_id INTEGER NOT NULL,
-    citizenship_code INTEGER NOT NULL,
+    country_id INTEGER NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50),

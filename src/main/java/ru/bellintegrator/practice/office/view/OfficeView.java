@@ -3,22 +3,22 @@ package ru.bellintegrator.practice.office.view;
 import io.swagger.annotations.ApiModelProperty;
 
 public class OfficeView {
-    @ApiModelProperty(hidden = true)
+    //@ApiModelProperty(hidden = true)
     private String id;
 
-    @ApiModelProperty(hidden = true)
+    //@ApiModelProperty(hidden = true)
     private String orgId;
 
-    @ApiModelProperty(hidden = true)
+    //@ApiModelProperty(hidden = true)
     private String name;
 
-    @ApiModelProperty(hidden = true)
+    //@ApiModelProperty(hidden = true)
     private String address;
 
-    @ApiModelProperty(hidden = true)
+    //@ApiModelProperty(hidden = true)
     private String phone;
 
-    @ApiModelProperty(hidden = true)
+    //@ApiModelProperty(hidden = true)
     private boolean isActive;
 
     public OfficeView(){

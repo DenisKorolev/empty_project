@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.practice.office.controller.OfficeController;
 import ru.bellintegrator.practice.office.service.OfficeService;
+import ru.bellintegrator.practice.office.view.OfficeFilterOutView;
 import ru.bellintegrator.practice.office.view.OfficeFilterView;
 import ru.bellintegrator.practice.office.view.OfficeIdView;
 import ru.bellintegrator.practice.office.view.OfficeView;
@@ -33,7 +34,7 @@ public class OfficeControllerImpl implements OfficeController {
     @Override
     @ApiOperation(value = "Filters Offices by OrgId and other parameters", responseContainer = "List", httpMethod = "POST")
     @RequestMapping(value = "/list", method = {POST})
-    public List<OfficeFilterView> filterByOrgId(@RequestBody OfficeFilterView officeView) {
+    public List<OfficeFilterOutView> filterByOrgId(@RequestBody OfficeFilterView officeView) {
         return officeService.filterByOrgId(officeView);
     }
 

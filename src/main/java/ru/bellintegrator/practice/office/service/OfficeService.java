@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.office.service;
 
+import ru.bellintegrator.practice.office.view.OfficeFilterOutView;
 import ru.bellintegrator.practice.office.view.OfficeFilterView;
 import ru.bellintegrator.practice.office.view.OfficeIdView;
 import ru.bellintegrator.practice.office.view.OfficeView;
@@ -13,7 +14,7 @@ public interface OfficeService {
      * @param officeView Request mapping
      * @return JSON Offices values
      */
-    List<OfficeFilterView> filterByOrgId(OfficeFilterView officeView);
+    List<OfficeFilterOutView> filterByOrgId(OfficeFilterView officeView);
 
     /**
      * Gets Office object by id

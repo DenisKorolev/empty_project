@@ -3,6 +3,7 @@ package ru.bellintegrator.practice.office.controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.bellintegrator.practice.office.model.Office;
+import ru.bellintegrator.practice.office.view.OfficeFilterOutView;
 import ru.bellintegrator.practice.office.view.OfficeFilterView;
 import ru.bellintegrator.practice.office.view.OfficeIdView;
 import ru.bellintegrator.practice.office.view.OfficeView;
@@ -16,7 +17,7 @@ public interface OfficeController {
      * @param officeView Office view object to map request fields
      * @return List of Office views if any
      */
-    List<OfficeFilterView> filterByOrgId(@RequestBody OfficeFilterView officeView);
+    List<OfficeFilterOutView> filterByOrgId(@RequestBody OfficeFilterView officeView);
 
     /**
      * Gets Office object by id
