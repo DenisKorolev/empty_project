@@ -89,11 +89,11 @@ public class OfficeServiceImpl implements OfficeService {
     public void updateById(OfficeView officeView) {
         Office office = dao.loadById(Long.parseLong(officeView.getId()));
 
-        if (!officeView.getName().isEmpty())
+        if ((officeView.getName() != null) && (!officeView.getName().isEmpty()))
             office.setOfficeName(officeView.getName());
-        if (!officeView.getAddress().isEmpty())
+        if ((officeView.getAddress() != null) && (!officeView.getAddress().isEmpty()))
             office.setOfficeAddress(officeView.getAddress());
-        if (!officeView.getPhone().isEmpty())
+        if ((officeView.getPhone() != null) && (!officeView.getPhone().isEmpty()))
             office.setOfficePhone(officeView.getPhone());
         office.setOfficeActive(officeView.getIsActive());
     }
