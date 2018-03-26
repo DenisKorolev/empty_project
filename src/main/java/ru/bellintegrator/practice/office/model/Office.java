@@ -106,7 +106,6 @@ public class Office {
     /**
      * Office phone number
      */
-    @Basic(optional = false)
     @Column(name = "office_phone")
     private String officePhone;
 

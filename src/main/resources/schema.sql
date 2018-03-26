@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS Office (
     org_id INTEGER,
     office_address VARCHAR(50) NOT NULL,
     office_name VARCHAR(50) NOT NULL,
-    office_phone VARCHAR(50) NOT NULL,
+    office_phone VARCHAR(50),
     is_office_Active BOOLEAN NOT NULL
 );
 

@@ -91,11 +91,18 @@ public class OfficeServiceImpl implements OfficeService {
 
         if ((officeView.getName() != null) && (!officeView.getName().isEmpty()))
             office.setOfficeName(officeView.getName());
+
         if ((officeView.getAddress() != null) && (!officeView.getAddress().isEmpty()))
             office.setOfficeAddress(officeView.getAddress());
+
         if ((officeView.getPhone() != null) && (!officeView.getPhone().isEmpty()))
             office.setOfficePhone(officeView.getPhone());
-        office.setOfficeActive(officeView.getIsActive());
+
+        //Set Office isActive
+        if (officeView.getIsActive() == null)
+            office.setOfficeActive(true);
+        else
+            office.setOfficeActive(officeView.getIsActive());
     }
 
     /**
@@ -128,9 +135,13 @@ public class OfficeServiceImpl implements OfficeService {
 
         //Optional part
         //Set Office phone
-        office.setOfficePhone(officeView.getPhone());
+        if ((officeView.getPhone() != null) && (!officeView.getPhone().isEmpty()))
+            office.setOfficePhone(officeView.getPhone());
         //Set Office isActive
-        office.setOfficeActive(officeView.getActive());
+        if (officeView.getActive() == null)
+            office.setOfficeActive(true);
+        else
+            office.setOfficeActive(officeView.getActive());
 
         dao.save(office);
 
