@@ -2,6 +2,7 @@ package ru.bellintegrator.practice.office.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import ru.bellintegrator.practice.common.view.ResultView;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.office.view.*;
 
@@ -21,19 +22,19 @@ public interface OfficeController {
      * @param id Office id
      * @return Office view object if any
      */
-    OfficeView loadById(@PathVariable(value = "id") Long id);
+    OfficeView loadById(@PathVariable(value = "id") String id);
 
     /**
      * Updates Office in DB
      * @param officeView Office view object to map request fields
      */
-    void updateById(@RequestBody OfficeView officeView);
+    ResultView updateById(@RequestBody OfficeView officeView);
 
     /**
      * Deletes Office in DB by id
      * @param id Office id to delete
      */
-    void deleteById(@PathVariable(value = "id") Long id);
+    ResultView deleteById(@PathVariable(value = "id") String id);
 
     /**
      * Adds Office to DB

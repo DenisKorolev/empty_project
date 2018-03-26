@@ -19,14 +19,14 @@ public class OfficeView {
     private String phone;
 
     //@ApiModelProperty(hidden = true)
-    private Boolean isActive;
+    private String isActive;
 
     public OfficeView(){
 
     }
 
     public OfficeView(String id, String orgId, String name, String address,
-                      String phone, boolean isActive) {
+                      String phone, String isActive) {
         setId(id);
         setOrgId(orgId);
         setName(name);
@@ -82,11 +82,11 @@ public class OfficeView {
         this.phone = phone;
     }
 
-    public Boolean getIsActive() {
+    public String getIsActive() {
         return isActive;
     }
 
-    public void setIsActive(Boolean isActive) {
+    public void setIsActive(String isActive) {
         this.isActive = isActive;
     }
 }

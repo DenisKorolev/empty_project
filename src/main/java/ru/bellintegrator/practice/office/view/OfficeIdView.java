@@ -32,7 +32,7 @@ public class OfficeIdView {
     /**
      * Office isActive parameter
      */
-    private Boolean isActive;
+    private String isActive;
 
     /**
      * Constructor for Jackson
@@ -94,11 +94,11 @@ public class OfficeIdView {
         this.phone = phone;
     }
 
-    public Boolean getActive() {
+    public String getActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(String active) {
         isActive = active;
     }
 }

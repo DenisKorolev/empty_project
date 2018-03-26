@@ -21,7 +21,7 @@ public class OfficeFilterOutView {
     /**
      * Office is active
      */
-    public Boolean isActive;
+    public String isActive;
 
     /**
      * Constructor for Jackson
@@ -37,7 +37,7 @@ public class OfficeFilterOutView {
      * @param orgName Organization name
      * @param isActive Is Office active
      */
-    public OfficeFilterOutView(String id, String name, String orgName, Boolean isActive){
+    public OfficeFilterOutView(String id, String name, String orgName, String isActive){
         setId(id);
         setName(name);
         setOrganizationName(orgName);
@@ -76,11 +76,11 @@ public class OfficeFilterOutView {
     }
 
     @JsonIgnore
-    public Boolean getActive() {
+    public String getActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(String active) {
         isActive = active;
     }
 }

@@ -49,14 +49,18 @@ public class OfficeServiceImpl implements OfficeService {
         office.setOrganization(organization);
         office.setOfficeName(officeView.name);
         office.setOfficePhone(officeView.phone);
-        office.setOfficeActive(officeView.isActive);
+        //Set Office isActive
+        if ((officeView.isActive == null) || (officeView.isActive.isEmpty()))
+            office.setOfficeActive(true);
+        else
+            office.setOfficeActive(Boolean.parseBoolean(officeView.isActive));
 
         List<Office> all = dao.filterByOrgId(office);
         List<OfficeFilterOutView> officeViews = new ArrayList<>();
 
         for (Office officeLoop:all) {
             OfficeFilterOutView view = new OfficeFilterOutView(officeLoop.getId().toString(), officeLoop.getOfficeName(),
-                    officeLoop.getOrganization().getOrgName(), officeLoop.getOfficeActive());
+                    officeLoop.getOrganization().getOrgName(), officeLoop.getOfficeActive().toString());
             officeViews.add(view);
 
             log.info(view.toString());
@@ -74,7 +78,7 @@ public class OfficeServiceImpl implements OfficeService {
         Office office = dao.loadById(id);
 
         OfficeView view = new OfficeView(office.getId().toString(), office.getOrganization().getId().toString(),
-                office.getOfficeName(), office.getOfficeAddress(), office.getOfficePhone(), office.getOfficeActive());
+                office.getOfficeName(), office.getOfficeAddress(), office.getOfficePhone(), office.getOfficeActive().toString());
 
         log.info(view.toString());
 
@@ -99,10 +103,10 @@ public class OfficeServiceImpl implements OfficeService {
             office.setOfficePhone(officeView.getPhone());
 
         //Set Office isActive
-        if (officeView.getIsActive() == null)
+        if ((officeView.getIsActive() == null) || (officeView.getIsActive().isEmpty()))
             office.setOfficeActive(true);
         else
-            office.setOfficeActive(officeView.getIsActive());
+            office.setOfficeActive(Boolean.parseBoolean(officeView.getIsActive()));
     }
 
     /**
@@ -138,10 +142,10 @@ public class OfficeServiceImpl implements OfficeService {
         if ((officeView.getPhone() != null) && (!officeView.getPhone().isEmpty()))
             office.setOfficePhone(officeView.getPhone());
         //Set Office isActive
-        if (officeView.getActive() == null)
+        if ((officeView.getActive() == null) || (officeView.getActive().isEmpty()))
             office.setOfficeActive(true);
         else
-            office.setOfficeActive(officeView.getActive());
+            office.setOfficeActive(Boolean.parseBoolean(officeView.getActive()));
 
         dao.save(office);
 

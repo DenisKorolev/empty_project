@@ -15,7 +15,7 @@ public class OfficeFilterView {
     public String phone;
 
     @JsonPropertyOrder(value = "4")
-    public Boolean isActive;
+    public String isActive;
 
 
     @ApiModelProperty(hidden = true)
@@ -33,7 +33,7 @@ public class OfficeFilterView {
     }
 
 
-    public OfficeFilterView(String id, String name, String organizationName, boolean isActive){
+    public OfficeFilterView(String id, String name, String organizationName, String isActive){
         this.id = id;
         this.name = name;
         this.organizationName = organizationName;
