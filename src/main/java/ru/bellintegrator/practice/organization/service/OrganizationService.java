@@ -1,8 +1,6 @@
 package ru.bellintegrator.practice.organization.service;
 
-import ru.bellintegrator.practice.organization.view.OrganizationFilterInView;
-import ru.bellintegrator.practice.organization.view.OrganizationFilterOutView;
-import ru.bellintegrator.practice.organization.view.OrganizationView;
+import ru.bellintegrator.practice.organization.view.*;
 
 import java.util.List;
 
@@ -27,4 +25,17 @@ public interface OrganizationService {
      * @param inView request mapping
      */
     void updateById(OrganizationView inView);
+
+    /**
+     * Adds Org to DB
+     * @param inView request mapping
+     * @return JSON Org id value
+     */
+    OrganizationIdOutView save(OrganizationSaveView inView);
+
+    /**
+     * Deletes Org in DB by id
+     * @param id Org id
+     */
+    void deleteById(String id);
 }

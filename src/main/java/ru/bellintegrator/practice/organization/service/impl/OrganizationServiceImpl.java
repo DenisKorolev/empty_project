@@ -12,9 +12,7 @@ import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.organization.dao.OrganizationDAO;
 import ru.bellintegrator.practice.organization.model.Organization;
 import ru.bellintegrator.practice.organization.service.OrganizationService;
-import ru.bellintegrator.practice.organization.view.OrganizationFilterInView;
-import ru.bellintegrator.practice.organization.view.OrganizationFilterOutView;
-import ru.bellintegrator.practice.organization.view.OrganizationView;
+import ru.bellintegrator.practice.organization.view.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,5 +107,44 @@ public class OrganizationServiceImpl implements OrganizationService {
         //Is Org active
         if (inView.getActive() != null)
             org.setActive(inView.getActive());
+    }
+
+    @Override
+    @Transactional
+    public OrganizationIdOutView save(OrganizationSaveView inView) {
+        Organization org = new Organization();
+
+        //Org name
+        org.setOrgName(inView.getName());
+        //Org full name
+        org.setOrgFullName(inView.getFullName());
+        //inn
+        org.setInn(inView.getInn());
+        //kpp
+        org.setKpp(inView.getKpp());
+        //address
+        org.setAddress(inView.getAddress());
+        //phone
+        org.setPhoneNumber(inView.getPhone());
+        //Is Org active
+        if (inView.getActive() != null)
+            org.setActive(inView.getActive());
+        else
+            org.setActive(true);
+
+        log.info(inView.toString());
+
+        dao.save(org);
+
+        OrganizationIdOutView outView = new OrganizationIdOutView(org.getId().toString());
+
+        return outView;
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(String id) {
+        Organization org = dao.loadById(Long.parseLong(id));
+        dao.deleteById(org);
     }
 }

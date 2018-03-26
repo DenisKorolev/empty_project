@@ -1,12 +1,11 @@
-package ru.bellintegrator.practice.organization.controller;
+package ru.bellintegrator.practice.organization.controller.impl;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.bellintegrator.practice.organization.controller.OrganizationController;
 import ru.bellintegrator.practice.organization.service.OrganizationService;
-import ru.bellintegrator.practice.organization.view.OrganizationFilterInView;
-import ru.bellintegrator.practice.organization.view.OrganizationFilterOutView;
-import ru.bellintegrator.practice.organization.view.OrganizationView;
+import ru.bellintegrator.practice.organization.view.*;
 
 import java.util.List;
 
@@ -45,10 +44,33 @@ public class OrganizationControllerImpl implements OrganizationController {
         return orgService.loadById(id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    @ApiOperation(value = "Loads Org by id", httpMethod = "POST")
+    @ApiOperation(value = "Updates Org by id", httpMethod = "POST")
     @RequestMapping(value = "/update", method = {POST})
     public void updateById(@RequestBody OrganizationView inView) {
         orgService.updateById(inView);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @ApiOperation(value = "Adds Org to DB", httpMethod = "POST")
+    @RequestMapping(value = "/create", method = {POST})
+    public OrganizationIdOutView save(@RequestBody OrganizationSaveView inView) {
+        return orgService.save(inView);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @ApiOperation(value = "Deletes Org by id", httpMethod = "POST")
+    @RequestMapping(value = "/delete/{id}", method = {POST})
+    public void deleteById(@PathVariable(value = "id") String id) {
+        orgService.deleteById(id);
     }
 }
