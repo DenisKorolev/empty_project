@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bellintegrator.practice.common.exception.OrgDoesNotExistException;
 import ru.bellintegrator.practice.office.dao.OfficeDAO;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.office.service.OfficeService;
@@ -42,6 +43,9 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public List<OfficeFilterOutView> filterByOrgId(OfficeFilterView officeView) {
+        Organization org = orgDAO.loadById(Long.parseLong(officeView.orgId));
+        if (org == null) throw new OrgDoesNotExistException(officeView.orgId);
+
         Organization organization = new Organization();
         organization.setId(Long.parseLong(officeView.orgId));
 
@@ -50,9 +54,7 @@ public class OfficeServiceImpl implements OfficeService {
         office.setOfficeName(officeView.name);
         office.setOfficePhone(officeView.phone);
         //Set Office isActive
-        if ((officeView.isActive == null) || (officeView.isActive.isEmpty()))
-            office.setOfficeActive(true);
-        else
+        if ((officeView.isActive != null) && (!officeView.isActive.isEmpty()))
             office.setOfficeActive(Boolean.parseBoolean(officeView.isActive));
 
         List<Office> all = dao.filterByOrgId(office);
@@ -103,9 +105,7 @@ public class OfficeServiceImpl implements OfficeService {
             office.setOfficePhone(officeView.getPhone());
 
         //Set Office isActive
-        if ((officeView.getIsActive() == null) || (officeView.getIsActive().isEmpty()))
-            office.setOfficeActive(true);
-        else
+        if ((officeView.getIsActive() != null) && (!officeView.getIsActive().isEmpty()))
             office.setOfficeActive(Boolean.parseBoolean(officeView.getIsActive()));
     }
 
@@ -125,9 +125,11 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public OfficeIdOutView save(OfficeIdView officeView) {
+
         Office office = new Office();
 
         Organization org = orgDAO.loadById(Long.parseLong(officeView.getOrgId()));
+        if (org == null) throw new OrgDoesNotExistException(officeView.getOrgId());
 
         //Obligatory part
         //Set Office name

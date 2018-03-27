@@ -10,6 +10,7 @@ import ru.bellintegrator.practice.office.controller.OfficeController;
 import ru.bellintegrator.practice.common.exception.RequiredFieldIsNullException;
 import ru.bellintegrator.practice.office.service.OfficeService;
 import ru.bellintegrator.practice.office.view.*;
+import ru.bellintegrator.practice.common.advice.WebRestControllerAdvice;
 
 import java.util.List;
 
@@ -39,16 +40,18 @@ public class OfficeControllerImpl implements OfficeController {
         //Checks if orgId request field is not null
         if ((officeView.orgId == null) || (officeView.orgId.isEmpty()))
             throw new RequiredFieldIsNullException("orgId");
+        //Checks if id request field is Long
+        try {
+            Long.parseLong(officeView.orgId);
+        }
+        catch (Exception ex){
+            throw new FieldIsNotLongException("id");
+        }
 
-        //TODO: delete
         //Checks if isActive boolean
         if ((officeView.isActive != null) && (!officeView.isActive.isEmpty()))
-            try {
-                Boolean.parseBoolean(officeView.isActive);
-            }
-            catch (Exception ex){
+            if (!WebRestControllerAdvice.isStringBoolean(officeView.isActive))
                 throw new FieldIsNotBooleanException("isActive");
-            }
 
         return officeService.filterByOrgId(officeView);
     }
@@ -64,7 +67,6 @@ public class OfficeControllerImpl implements OfficeController {
         //Checks if id request field is not null
         if ((id == null) || id.isEmpty())
             throw new RequiredFieldIsNullException("id");
-
         //Checks if id request field is Long
         try {
             Long.parseLong(id);
@@ -87,7 +89,6 @@ public class OfficeControllerImpl implements OfficeController {
         //Checks if id request field is not null
         if ((officeView.getId() == null) || (officeView.getId().isEmpty()))
             throw new RequiredFieldIsNullException("id");
-
         //Checks if id request field is Long
         try {
             Long.parseLong(officeView.getId());
@@ -96,15 +97,10 @@ public class OfficeControllerImpl implements OfficeController {
             throw new FieldIsNotLongException("id");
         }
 
-        //TODO: delete
-        //Checks if isActive boolean
+        //Checks if isActive request field is boolean
         if ((officeView.getIsActive() != null) && (!officeView.getIsActive().isEmpty()))
-            try {
-                Boolean.parseBoolean(officeView.getIsActive());
-            }
-            catch (Exception ex){
+            if (!WebRestControllerAdvice.isStringBoolean(officeView.getIsActive()))
                 throw new FieldIsNotBooleanException("isActive");
-            }
 
         officeService.updateById(officeView);
         return new ResultView("success");
@@ -121,7 +117,6 @@ public class OfficeControllerImpl implements OfficeController {
         //Checks if id request field is not null
         if ((id == null) || id.isEmpty())
             throw new RequiredFieldIsNullException("id");
-
         //Checks if id request field is Long
         try {
             Long.parseLong(id);
@@ -161,15 +156,10 @@ public class OfficeControllerImpl implements OfficeController {
         if ((officeView.getAddress() == null) || officeView.getAddress().isEmpty())
             throw new RequiredFieldIsNullException("name");
 
-        //TODO: delete
-        //Checks if isActive request field boolean
+        //Checks if isActive request field is boolean
         if ((officeView.getActive() != null) && (!officeView.getActive().isEmpty()))
-            try {
-                Boolean.parseBoolean(officeView.getActive());
-            }
-            catch (Exception ex){
+            if (!WebRestControllerAdvice.isStringBoolean(officeView.getActive()))
                 throw new FieldIsNotBooleanException("isActive");
-            }
 
         return officeService.save(officeView);
     }
