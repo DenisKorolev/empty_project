@@ -121,7 +121,6 @@ public class Office {
     /**
      * Field that identifies whether office is active or not
      */
-    @Basic(optional = false)
     @Column(name = "is_office_Active")
     private Boolean isOfficeActive;
 
