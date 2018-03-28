@@ -134,7 +134,6 @@ public class Organization {
     /**
      * Company phone number
      */
-    @Basic(optional = false)
     @Column(name = "org_phone")
     private String phoneNumber;
 
@@ -150,7 +149,6 @@ public class Organization {
     /**
      * Field that identifies whether company is active or not
      */
-    @Basic(optional = false)
     @Column(name = "is_active")
     private Boolean isActive;
 

@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS Organization (
     org_inn VARCHAR(12) NOT NULL,
     kpp VARCHAR(9) NOT NULL,
     org_address VARCHAR(50) NOT NULL,
-    org_phone VARCHAR(50) NOT NULL,
-    is_active BOOLEAN NOT NULL
+    org_phone VARCHAR(50),
+    is_active BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS Office (
