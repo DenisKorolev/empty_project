@@ -14,7 +14,7 @@ public class OrganizationFilterInView {
     /**
      * Is Org active
      */
-    private Boolean isActive;
+    private String isActive;
 
     /**
      * Constructor for Jackson
@@ -39,11 +39,11 @@ public class OrganizationFilterInView {
         this.inn = inn;
     }
 
-    public Boolean getActive() {
+    public String getActive() {
         return isActive;
     }
 
-    public void setActive(Boolean isActive) {
-        isActive = isActive;
+    public void setActive(String isActive) {
+        this.isActive = isActive;
     }
 }

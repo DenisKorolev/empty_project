@@ -22,7 +22,7 @@ public class OrganizationFilterOutView {
      * Is Org active
      */
     @JsonProperty("isActive")
-    private Boolean isActive;
+    private String isActive;
 
     /**
      * Constructor for Jackson
@@ -34,7 +34,7 @@ public class OrganizationFilterOutView {
     /**
      * Constructor for Service
      */
-    public OrganizationFilterOutView(String id, String name, String officesCount, Boolean isActive){
+    public OrganizationFilterOutView(String id, String name, String officesCount, String isActive){
         setId(id);
         setName(name);
         setOfficesCount(officesCount);
@@ -71,12 +71,12 @@ public class OrganizationFilterOutView {
     }
 
     @JsonProperty("isActive")
-    public Boolean getActive() {
+    public String getActive() {
         return isActive;
     }
 
     @JsonProperty("isActive")
-    public void setActive(Boolean isActive) {
+    public void setActive(String isActive) {
         this.isActive = isActive;
     }
 }

@@ -35,7 +35,7 @@ public class OrganizationSaveView {
     private String phone;
 
     @JsonProperty("isActive")
-    private Boolean isActive;
+    private String isActive;
 
     /**
      * Constructor for Jackson
@@ -101,12 +101,12 @@ public class OrganizationSaveView {
     }
 
     @JsonProperty("isActive")
-    public Boolean getActive() {
+    public String getActive() {
         return isActive;
     }
 
     @JsonProperty("isActive")
-    public void setActive(Boolean active) {
+    public void setActive(String active) {
         this.isActive = active;
     }
 }

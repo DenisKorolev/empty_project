@@ -39,7 +39,7 @@ public class OrganizationView {
     private String phone;
 
     @JsonProperty("isActive")
-    private Boolean isActive;
+    private String isActive;
 
     /**
      * Constructor for Jackson
@@ -52,7 +52,7 @@ public class OrganizationView {
      * Constructor for Service
      */
     public OrganizationView(String id, String name, String fullName, String inn,
-                            String kpp, String address, String phone, Boolean isActive){
+                            String kpp, String address, String phone, String isActive){
         setId(id);
         setName(name);
         setFullName(fullName);
@@ -125,12 +125,12 @@ public class OrganizationView {
     }
 
     @JsonProperty("isActive")
-    public Boolean getActive() {
+    public String getActive() {
         return isActive;
     }
 
     @JsonProperty("isActive")
-    public void setActive(Boolean active) {
+    public void setActive(String active) {
         this.isActive = active;
     }
 }
