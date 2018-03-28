@@ -54,7 +54,6 @@ public class Organization {
     /**
      * Short organization name
      */
-    @Basic(optional = false)
     @Column(name = "org_name")
     private String orgName;
 

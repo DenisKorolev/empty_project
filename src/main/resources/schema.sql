@@ -25,7 +25,7 @@ ALTER TABLE Person_House ADD FOREIGN KEY (person_id) REFERENCES Person(id);
 CREATE TABLE IF NOT EXISTS Organization (
     org_id  INTEGER PRIMARY KEY AUTO_INCREMENT,
     version INTEGER NOT NULL,
-    org_name VARCHAR(50) NOT NULL,
+    org_name VARCHAR(50),
     org_full_name VARCHAR(50) NOT NULL,
     org_inn VARCHAR(12) NOT NULL,
     kpp VARCHAR(9) NOT NULL,
