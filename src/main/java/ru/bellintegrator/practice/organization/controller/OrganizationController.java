@@ -2,6 +2,7 @@ package ru.bellintegrator.practice.organization.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import ru.bellintegrator.practice.common.view.ResultView;
 import ru.bellintegrator.practice.organization.view.*;
 
 import java.util.List;
@@ -26,20 +27,20 @@ public interface OrganizationController {
      * Updates Org in DB by id
      * @param inView request mapping
      */
-    void updateById(@RequestBody OrganizationView inView);
+    ResultView updateById(@RequestBody OrganizationView inView);
 
     /**
      * Adds Org to DB
      * @param inView request mapping
      * @return Org view
      */
-    public OrganizationIdOutView save(@RequestBody OrganizationSaveView inView);
+    OrganizationIdOutView save(@RequestBody OrganizationSaveView inView);
 
     /**
      * Deletes Org in DB by id
      * @param id Org id
      */
-    void deleteById(@PathVariable(value = "id") String  id);
+    ResultView deleteById(@PathVariable(value = "id") String  id);
 
 
 }

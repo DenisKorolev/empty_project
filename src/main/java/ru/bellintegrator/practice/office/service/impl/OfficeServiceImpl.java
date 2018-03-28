@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bellintegrator.practice.common.exception.EntityDoesNotExistException;
 import ru.bellintegrator.practice.common.exception.OrgDoesNotExistException;
 import ru.bellintegrator.practice.office.dao.OfficeDAO;
 import ru.bellintegrator.practice.office.model.Office;
@@ -94,6 +95,9 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional
     public void updateById(OfficeView officeView) {
         Office office = dao.loadById(Long.parseLong(officeView.getId()));
+        //Checks if Office exists
+        if (office == null)
+            throw new EntityDoesNotExistException("Office", officeView.getId());
 
         if ((officeView.getName() != null) && (!officeView.getName().isEmpty()))
             office.setOfficeName(officeView.getName());
@@ -116,6 +120,11 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional
     public void deleteById(Long id) {
         Office office = dao.loadById(id);
+
+        //Checks if Office exists
+        if (office == null)
+            throw new EntityDoesNotExistException("Office", id.toString());
+
         dao.deleteById(office);
     }
 
@@ -129,7 +138,8 @@ public class OfficeServiceImpl implements OfficeService {
         Office office = new Office();
 
         Organization org = orgDAO.loadById(Long.parseLong(officeView.getOrgId()));
-        if (org == null) throw new OrgDoesNotExistException(officeView.getOrgId());
+        if (org == null)
+            throw new OrgDoesNotExistException(officeView.getOrgId());
 
         //Obligatory part
         //Set Office name
