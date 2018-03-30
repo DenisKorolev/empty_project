@@ -74,11 +74,6 @@ public class Worker {
         this.country = country;
     }
 
-    /*
-    @Column(name = "citezenship_code")
-    private Long citezenshipCode;
-    */
-
 
     @Column(name = "first_name")
     private String firstName;
@@ -127,6 +122,27 @@ public class Worker {
         this.position = position;
     }
 
+    @Column(name = "salary")
+    private Float salary;
+
+    public Float getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Float salary) {
+        this.salary = salary;
+    }
+
+    @Column(name = "registration_date")
+    private Date registrationDate;
+
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
 
     @Column(name = "phone")
     private String phone;
@@ -139,7 +155,19 @@ public class Worker {
         this.phone = phone;
     }
 
+    @Basic(optional = false)
+    @Column(name = "doc_number")
+    private String docNumber;
 
+    public String getDocNumber() {
+        return docNumber;
+    }
+
+    public void setDocNumber(String docNumber) {
+        this.docNumber = docNumber;
+    }
+
+    @Basic(optional = false)
     @Column(name = "doc_date")
     private Date docDate;
 
@@ -149,17 +177,5 @@ public class Worker {
 
     public void setDocDate(Date docDate) {
         this.docDate = docDate;
-    }
-
-
-    @Column(name = "is_identified")
-    private Boolean isIdentified;
-
-    public Boolean getIdentified() {
-        return isIdentified;
-    }
-
-    public void setIdentified(Boolean identified) {
-        isIdentified = identified;
     }
 }

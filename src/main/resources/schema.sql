@@ -76,15 +76,20 @@ CREATE TABLE IF NOT EXISTS Worker (
     version INTEGER NOT NULL,
     office_id INTEGER NOT NULL,
     doc_id INTEGER NOT NULL,
-    country_id INTEGER NOT NULL,
+    country_id INTEGER,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50),
     position VARCHAR(50),
-    phone VARCHAR(50) NOT NULL,
-    doc_date DATE NOT NULL,
-    is_identified BOOLEAN NOT NULL
+    salary DECIMAL(10, 2),
+    registration_date DATE,
+    phone VARCHAR(50),
+    doc_number VARCHAR(25) NOT NULL,
+    doc_date DATE NOT NULL
 );
 
-CREATE INDEX IX_Doc_User_Id  ON Worker(doc_id);
+CREATE INDEX IX_Doc_Worker_Id  ON Worker(doc_id);
 ALTER TABLE Worker ADD FOREIGN KEY (doc_id) REFERENCES Doc_type(doc_id);
+
+CREATE INDEX IX_Country_Worker_Id ON Worker(country_id);
+ALTER TABLE Worker ADD FOREIGN KEY (office_id) REFERENCES Country(country_id);
