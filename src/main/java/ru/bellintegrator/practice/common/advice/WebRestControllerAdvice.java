@@ -44,4 +44,18 @@ public class WebRestControllerAdvice {
             return true;
         else return false;
     }
+
+    public static void checkFieldOnNullAndNotLong(String field, String fieldName){
+
+        //Checks if field is not null
+        if ((field == null) || (field.isEmpty()))
+            throw new RequiredFieldIsNullException(fieldName);
+        //Checks if filed is Long
+        try {
+            Long.parseLong(field);
+        }
+        catch (Exception ex){
+            throw new FieldIsNotLongException(fieldName);
+        }
+    }
 }
