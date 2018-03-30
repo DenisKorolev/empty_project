@@ -12,7 +12,7 @@ public interface WorkerDAO {
      * @param worker Worker object to filter
      * @return List of filtered Worker objects if any
      */
-    List<Worker> filter(Worker worker);
+    List<Worker> filterByOfficeId(Worker worker);
 
 
     /**

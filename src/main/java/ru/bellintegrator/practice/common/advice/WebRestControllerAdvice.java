@@ -45,6 +45,18 @@ public class WebRestControllerAdvice {
         else return false;
     }
 
+    public static boolean isFieldLong(String field, String fieldName) {
+
+        try {
+            Long.parseLong(field);
+        }
+        catch (NumberFormatException ex){
+            throw new FieldIsNotLongException(fieldName);
+        }
+
+        return true;
+    }
+
     public static void checkFieldOnNullAndNotLong(String field, String fieldName){
 
         //Checks if field is not null
@@ -54,7 +66,7 @@ public class WebRestControllerAdvice {
         try {
             Long.parseLong(field);
         }
-        catch (Exception ex){
+        catch (NumberFormatException ex){
             throw new FieldIsNotLongException(fieldName);
         }
     }
