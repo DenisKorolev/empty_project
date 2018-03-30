@@ -28,4 +28,16 @@ public class CountryDAOImpl implements CountryDAO{
     public Country loadById(Long id){
         return em.find(Country.class, id);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Country loadByCountryCode(Long countryCode) {
+
+        TypedQuery<Country> query = em.createQuery("SELECT c FROM Country c WHERE c.countryCode = :countryCode", Country.class);
+        query.setParameter("countryCode", countryCode);
+
+        return query.getSingleResult();
+    }
 }

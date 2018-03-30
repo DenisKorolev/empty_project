@@ -10,4 +10,11 @@ public interface CountryDAO {
 
     //Get Country by Id
     Country loadById(Long Id);
+
+    /**
+     * Gets Country object by country_code
+     * @param countryCode Country country_code
+     * @return Country object if any
+     */
+    Country loadByCountryCode(Long countryCode);
 }
