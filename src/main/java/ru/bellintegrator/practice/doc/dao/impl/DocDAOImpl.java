@@ -30,4 +30,14 @@ public class DocDAOImpl implements DocDAO{
         return em.find(Doc.class, id);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Doc loadByDocNumber(String docNumber) {
+        TypedQuery<Doc> query = em.createQuery("SELECT d FROM Doc d WHERE d.docNumber = :docNumber", Doc.class);
+        query.setParameter("docNumber", docNumber);
+
+        return query.getSingleResult();
+    }
 }
