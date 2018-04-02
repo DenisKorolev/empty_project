@@ -48,22 +48,22 @@ public class WorkerDAOImpl implements WorkerDAO{
         //Worker first name
         if ((workerEntity.getFirstName() != null) && (!workerEntity.getFirstName().isEmpty()))
             predicates.add(
-                    builder.like(worker.get("firstName"), "%" + workerEntity.getFirstName() + "%")
+                    builder.like(builder.upper(worker.get("firstName")), ("%" + workerEntity.getFirstName() + "%").toUpperCase())
             );
         //Worker last name
         if ((workerEntity.getLastName() != null) && (!workerEntity.getLastName().isEmpty()))
             predicates.add(
-                    builder.like(worker.get("lastName"), "%" + workerEntity.getLastName() + "%")
+                    builder.like(builder.upper(worker.get("lastName")), ("%" + workerEntity.getLastName() + "%").toUpperCase())
             );
         //Worker middle name
         if ((workerEntity.getMiddleName() != null) && (!workerEntity.getMiddleName().isEmpty()))
             predicates.add(
-                    builder.like(worker.get("middleName"), "%" + workerEntity.getMiddleName() + "%")
+                    builder.like(builder.upper(worker.get("middleName")), ("%" + workerEntity.getMiddleName() + "%").toUpperCase())
             );
         //Worker position
         if ((workerEntity.getPosition() != null) && (!workerEntity.getPosition().isEmpty()))
             predicates.add(
-                    builder.like(worker.get("position"), "%" + workerEntity.getPosition() + "%")
+                    builder.like(builder.upper(worker.get("position")), ("%" + workerEntity.getPosition() + "%").toUpperCase())
             );
 
         //Worker Country citizenship code

@@ -1,8 +1,6 @@
 package ru.bellintegrator.practice.worker.service;
 
-import ru.bellintegrator.practice.worker.view.WorkerFilterInView;
-import ru.bellintegrator.practice.worker.view.WorkerFilterOutView;
-import ru.bellintegrator.practice.worker.view.WorkerView;
+import ru.bellintegrator.practice.worker.view.*;
 
 import java.util.List;
 
@@ -21,4 +19,23 @@ public interface WorkerService {
      * @return JSON Employee value
      */
     WorkerView loadById(String id);
+
+    /**
+     * Updates Employee object by id
+     * @param inView request mapping
+     */
+    void updateById(WorkerUpdateInView inView);
+
+    /**
+     * Deletes Employee object by id
+     * @param id Employee id
+     */
+    void deleteById(String id);
+
+    /**
+     * Adds Employee object to DB
+     * @param inView request mapping
+     * @return JSON Employee id
+     */
+    WorkerIdOutView save(WorkerSaveView inView);
 }

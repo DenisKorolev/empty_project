@@ -31,6 +31,11 @@ public class ValidationUtils {
         return ((str == null) || (str.isEmpty()));
     }
 
+    public static void checkFieldOnNullOrEmpty(String field, String fieldName){
+        if (isStringNullOrEmpty(field))
+            throw new RequiredFieldIsNullException(fieldName);
+    }
+
     public static void checkFieldOnNullAndNotLong(String field, String fieldName){
 
         //Checks if field is not null

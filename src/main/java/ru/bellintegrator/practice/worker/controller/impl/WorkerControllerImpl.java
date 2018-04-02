@@ -6,11 +6,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.bellintegrator.practice.common.view.ResultView;
 import ru.bellintegrator.practice.worker.controller.WorkerController;
 import ru.bellintegrator.practice.worker.service.WorkerService;
-import ru.bellintegrator.practice.worker.view.WorkerFilterInView;
-import ru.bellintegrator.practice.worker.view.WorkerFilterOutView;
-import ru.bellintegrator.practice.worker.view.WorkerView;
+import ru.bellintegrator.practice.worker.view.*;
 
 import java.util.List;
 
@@ -49,5 +48,42 @@ public class WorkerControllerImpl implements WorkerController{
     public WorkerView loadById(@PathVariable(value = "id") String id) {
 
         return wrkService.loadById(id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @ApiOperation(value = "Updates Employee by id", httpMethod = "POST")
+    @RequestMapping(value = "/update", method = {POST})
+    public ResultView updateById(@RequestBody WorkerUpdateInView inView) {
+
+        wrkService.updateById(inView);
+
+        return new ResultView("success");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @ApiOperation(value = "Deletes Employee by id", httpMethod = "POST")
+    @RequestMapping(value = "/delete/{id}", method = {POST})
+    public ResultView deleteById(@PathVariable(value = "id") String id) {
+
+        wrkService.deleteById(id);
+
+        return new ResultView("success");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @ApiOperation(value = "Adds Employee to DB", httpMethod = "POST")
+    @RequestMapping(value = "/create", method = {POST})
+    public WorkerIdOutView save(@RequestBody WorkerSaveView inView) {
+
+        return wrkService.save(inView);
     }
 }

@@ -1,10 +1,6 @@
 package ru.bellintegrator.practice.worker.view;
 
-public class WorkerView {
-    /**
-     * Employee id
-     */
-    private String id;
+public class WorkerSaveView {
 
     /**
      * Employee Office id
@@ -52,11 +48,6 @@ public class WorkerView {
     private String docCode;
 
     /**
-     * Employee Doc type name
-     */
-    private String docName;
-
-    /**
      * Employee document number
      */
     private String docNumber;
@@ -72,24 +63,19 @@ public class WorkerView {
     private String citizenshipCode;
 
     /**
-     * Employee Country name
-     */
-    private String citizenshipName;
-
-    /**
      * Constructor for Jackson
      */
-    public WorkerView(){
+    public WorkerSaveView(){
 
     }
 
     /**
      * Constructor for Service
      */
-    public WorkerView(String id, String officeId, String firstName, String secondName, String middleName, String position,
-                      String salary, String registrationDate, String phone, String docCode, String docName,
-                      String docNumber, String docDate, String citizenshipCode, String citizenshipName){
-        setId(id);
+    public WorkerSaveView(String officeId, String firstName, String secondName, String middleName, String position,
+                          String salary, String registrationDate, String phone, String docCode, String docNumber,
+                          String docDate, String citizenshipCode){
+
         setOfficeId(officeId);
         setFirstName(firstName);
         setSecondName(secondName);
@@ -99,25 +85,15 @@ public class WorkerView {
         setRegistrationDate(registrationDate);
         setPhone(phone);
         setDocCode(docCode);
-        setDocName(docName);
         setDocNumber(docNumber);
         setDocDate(docDate);
         setCitizenshipCode(citizenshipCode);
-        setCitizenshipName(citizenshipName);
     }
 
 
     @Override
     public String toString() {
-        return "{id: " + getId() + "; officeId: " + getOfficeId() + "; firstName: " + getFirstName();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        return "";
     }
 
     public String getOfficeId() {
@@ -192,14 +168,6 @@ public class WorkerView {
         this.docCode = docCode;
     }
 
-    public String getDocName() {
-        return docName;
-    }
-
-    public void setDocName(String docName) {
-        this.docName = docName;
-    }
-
     public String getDocNumber() {
         return docNumber;
     }
@@ -222,13 +190,5 @@ public class WorkerView {
 
     public void setCitizenshipCode(String citizenshipCode) {
         this.citizenshipCode = citizenshipCode;
-    }
-
-    public String getCitizenshipName() {
-        return citizenshipName;
-    }
-
-    public void setCitizenshipName(String citizenshipName) {
-        this.citizenshipName = citizenshipName;
     }
 }

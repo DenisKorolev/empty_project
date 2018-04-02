@@ -1,96 +1,95 @@
 package ru.bellintegrator.practice.worker.view;
 
-public class WorkerView {
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+public class WorkerUpdateInView {
     /**
      * Employee id
      */
+    @JsonPropertyOrder(value = "1")
     private String id;
-
-    /**
-     * Employee Office id
-     */
-    private String officeId;
 
     /**
      * Employee first name
      */
+    @JsonPropertyOrder(value = "2")
     private String firstName;
 
     /**
      * Employee second name
      */
+    @JsonPropertyOrder(value = "3")
     private String secondName;
 
     /**
      * Employee middle name
      */
+    @JsonPropertyOrder(value = "4")
     private String middleName;
 
     /**
      * Employee position
      */
+    @JsonPropertyOrder(value = "5")
     private String position;
 
     /**
      * Employee salary
      */
+    @JsonPropertyOrder(value = "6")
     private String salary;
 
     /**
      * Employee registration date
      */
+    @JsonPropertyOrder(value = "7")
     private String registrationDate;
 
     /**
      * Employee phone number
      */
+    @JsonPropertyOrder(value = "8")
     private String phone;
 
     /**
      * Employee Doc type code
      */
+    @JsonPropertyOrder(value = "9")
     private String docCode;
-
-    /**
-     * Employee Doc type name
-     */
-    private String docName;
 
     /**
      * Employee document number
      */
+    @JsonPropertyOrder(value = "10")
     private String docNumber;
 
     /**
      * Employee document date
      */
+    @JsonPropertyOrder(value = "11")
     private String docDate;
 
     /**
      * Employee Country code
      */
+    @JsonPropertyOrder(value = "12")
     private String citizenshipCode;
-
-    /**
-     * Employee Country name
-     */
-    private String citizenshipName;
 
     /**
      * Constructor for Jackson
      */
-    public WorkerView(){
+    @JsonPropertyOrder(value = "13")
+    public WorkerUpdateInView(){
 
     }
 
     /**
      * Constructor for Service
      */
-    public WorkerView(String id, String officeId, String firstName, String secondName, String middleName, String position,
-                      String salary, String registrationDate, String phone, String docCode, String docName,
-                      String docNumber, String docDate, String citizenshipCode, String citizenshipName){
+    public WorkerUpdateInView(String id, String firstName, String secondName, String middleName, String position,
+                              String salary, String registrationDate, String phone, String docCode, String docNumber,
+                              String docDate, String citizenshipCode){
         setId(id);
-        setOfficeId(officeId);
         setFirstName(firstName);
         setSecondName(secondName);
         setMiddleName(middleName);
@@ -99,17 +98,15 @@ public class WorkerView {
         setRegistrationDate(registrationDate);
         setPhone(phone);
         setDocCode(docCode);
-        setDocName(docName);
         setDocNumber(docNumber);
         setDocDate(docDate);
         setCitizenshipCode(citizenshipCode);
-        setCitizenshipName(citizenshipName);
     }
 
 
     @Override
     public String toString() {
-        return "{id: " + getId() + "; officeId: " + getOfficeId() + "; firstName: " + getFirstName();
+        return "{id: " + getId();
     }
 
     public String getId() {
@@ -118,14 +115,6 @@ public class WorkerView {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getOfficeId() {
-        return officeId;
-    }
-
-    public void setOfficeId(String officeId) {
-        this.officeId = officeId;
     }
 
     public String getFirstName() {
@@ -192,14 +181,6 @@ public class WorkerView {
         this.docCode = docCode;
     }
 
-    public String getDocName() {
-        return docName;
-    }
-
-    public void setDocName(String docName) {
-        this.docName = docName;
-    }
-
     public String getDocNumber() {
         return docNumber;
     }
@@ -222,13 +203,5 @@ public class WorkerView {
 
     public void setCitizenshipCode(String citizenshipCode) {
         this.citizenshipCode = citizenshipCode;
-    }
-
-    public String getCitizenshipName() {
-        return citizenshipName;
-    }
-
-    public void setCitizenshipName(String citizenshipName) {
-        this.citizenshipName = citizenshipName;
     }
 }

@@ -6,21 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.bellintegrator.practice.common.advice.WebRestControllerAdvice;
 import ru.bellintegrator.practice.common.exception.EntityDoesNotExistException;
+import ru.bellintegrator.practice.common.util.ValidationUtils;
 import ru.bellintegrator.practice.country.dao.CountryDAO;
 import ru.bellintegrator.practice.country.model.Country;
+import ru.bellintegrator.practice.doc.dao.DocDAO;
+import ru.bellintegrator.practice.doc.model.Doc;
 import ru.bellintegrator.practice.office.dao.OfficeDAO;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.worker.dao.WorkerDAO;
 import ru.bellintegrator.practice.worker.model.Worker;
 import ru.bellintegrator.practice.worker.service.WorkerService;
-import ru.bellintegrator.practice.worker.view.WorkerFilterInView;
-import ru.bellintegrator.practice.worker.view.WorkerFilterOutView;
-import ru.bellintegrator.practice.worker.view.WorkerView;
+import ru.bellintegrator.practice.worker.view.*;
 
-import javax.persistence.NoResultException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -34,11 +35,50 @@ public class WorkerServiceImpl implements WorkerService{
 
     private final CountryDAO countryDAO;
 
+    private final DocDAO docDAO;
+
     @Autowired
-    public WorkerServiceImpl(WorkerDAO dao, OfficeDAO officeDAO, CountryDAO countryDAO){
+    public WorkerServiceImpl(WorkerDAO dao, OfficeDAO officeDAO, CountryDAO countryDAO, DocDAO docDAO){
         this.dao = dao;
         this.officeDAO = officeDAO;
         this.countryDAO = countryDAO;
+        this.docDAO = docDAO;
+    }
+
+    private Country checkCountryExistOnCitizenshipCode(String citizenshipCode){
+        Country country = null;
+
+        if (!ValidationUtils.isStringNullOrEmpty(citizenshipCode)){
+            if (ValidationUtils.isFieldLong(citizenshipCode, "citizenshipCode")) {
+
+                try {
+                    country = countryDAO.loadByCountryCode(Long.parseLong(citizenshipCode));
+                }
+                catch (EmptyResultDataAccessException ex){
+                    throw new EntityDoesNotExistException("Country", "citizenshipCode", citizenshipCode);
+                }
+
+            }
+        }
+        return country;
+    }
+
+    private Doc checksDocExistOnDocNumber(String docNumber){
+        Doc doc = null;
+
+        ValidationUtils.checkFieldOnNullOrEmpty(docNumber, "docCode");
+
+        if (ValidationUtils.isFieldLong(docNumber, "docCode")){
+
+            try {
+                doc = docDAO.loadByDocNumber(docNumber);
+            }
+            catch (EmptyResultDataAccessException ex){
+                throw new EntityDoesNotExistException("Doc Type", "docCode", docNumber);
+            }
+        }
+
+        return doc;
     }
 
     /**
@@ -51,7 +91,7 @@ public class WorkerServiceImpl implements WorkerService{
         Worker worker = new Worker();
 
         //Checks if Office id request field is not null and is Long
-        WebRestControllerAdvice.checkFieldOnNullAndNotLong(inView.getOfficeId(), "officeId");
+        ValidationUtils.checkFieldOnNullAndNotLong(inView.getOfficeId(), "officeId");
 
         Office office = officeDAO.loadById(Long.parseLong(inView.getOfficeId()));
 
@@ -59,23 +99,12 @@ public class WorkerServiceImpl implements WorkerService{
         if (office == null)
             throw new EntityDoesNotExistException("Office", inView.getOfficeId());
 
+
         //Checks if Country with citizenship code request field exists and citizenship code is Long
-        if ((inView.getCitizenshipCode() != null) && (!inView.getCitizenshipCode().isEmpty())){
-            if (WebRestControllerAdvice.isFieldLong(inView.getCitizenshipCode(), "citizenshipCode")) {
+        Country country = checkCountryExistOnCitizenshipCode(inView.getCitizenshipCode());
 
-                Country country;
-
-                try {
-                    country = countryDAO.loadByCountryCode(Long.parseLong(inView.getCitizenshipCode()));
-                }
-                catch (EmptyResultDataAccessException ex){
-                    throw new EntityDoesNotExistException("Country", "citizenshipCode", inView.getCitizenshipCode());
-                }
-
-                //Set Country
-                worker.setCountry(country);
-            }
-        }
+        //Set Country
+        worker.setCountry(country);
 
 
         //Set Office
@@ -118,6 +147,192 @@ public class WorkerServiceImpl implements WorkerService{
     @Override
     @Transactional
     public WorkerView loadById(String id) {
-        return null;
+
+        ValidationUtils.checkFieldOnNullAndNotLong(id, "id");
+
+        Worker worker = dao.loadById(Long.parseLong(id));;
+
+        //Checks if Employee exists
+        ValidationUtils.checkEntityExists(worker, "Employee", id);
+
+
+        WorkerView view = new WorkerView(worker.getId().toString(), worker.getOffice().getId().toString(), worker.getFirstName(),
+                worker.getLastName(), worker.getMiddleName(), worker.getPosition(), String.format("%.2f", worker.getSalary()),
+                new SimpleDateFormat("yyyy-MM-dd").format(worker.getRegistrationDate()), worker.getPhone(), worker.getDoc().getDocNumber(),
+                worker.getDoc().getDocName(), worker.getDocNumber(), new SimpleDateFormat("yyyy-MM-dd").format(worker.getDocDate()),
+                worker.getCountry().getCountryCode().toString(), worker.getCountry().getCountryName());
+
+        log.info(view.toString());
+
+        return view;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void updateById(WorkerUpdateInView inView) {
+
+        //Checks if Employee id request field is not null and is Long
+        ValidationUtils.checkFieldOnNullAndNotLong(inView.getId(), "id");
+
+        Worker worker = dao.loadById(Long.parseLong(inView.getId()));
+
+        //Checks if Employee exist
+        if (worker == null)
+            throw new EntityDoesNotExistException("Employee", inView.getId());
+
+        //Set Employee first name
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getFirstName())){
+            worker.setFirstName(inView.getFirstName());
+        }
+
+        //Set Employee second name
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getSecondName())){
+            worker.setLastName(inView.getSecondName());
+        }
+
+        //Set Employee middle name
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getMiddleName())){
+            worker.setMiddleName(inView.getMiddleName());
+        }
+
+        //Set Employee position
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getPosition())){
+            worker.setPosition(inView.getPosition());
+        }
+
+        //Checks if Employee salary request field is Float
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getSalary())) {
+            ValidationUtils.checkFieldOnNotFloat(inView.getSalary(), "salary");
+            //Set Employee salary
+            worker.setSalary(Float.parseFloat(inView.getSalary()));
+        }
+
+        //Checks if Employee registration date is Date
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getRegistrationDate())){
+            Date registrationDate = ValidationUtils.checksFieldOnNotDate(inView.getRegistrationDate(), "registrationDate");
+            //Set Employee registration date
+            worker.setRegistrationDate(registrationDate);
+        }
+
+        //Set Employee phone number
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getPhone())){
+            worker.setPhone(inView.getPhone());
+        }
+
+        //Checks if Employee Doc Type code is Long
+
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getDocCode())){
+
+            if (ValidationUtils.isFieldLong(inView.getDocCode(), "docCode")){
+
+                Doc doc;
+
+                try {
+                    doc = docDAO.loadByDocNumber(inView.getDocCode());
+                }
+                catch (EmptyResultDataAccessException ex){
+                    throw new EntityDoesNotExistException("Doc Type", "docCode", inView.getDocCode());
+                }
+
+                //Set Doc Type
+                worker.setDoc(doc);
+            }
+
+        }
+
+        //Set Employee doc number
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getDocNumber())){
+            worker.setDocNumber(inView.getDocNumber());
+        }
+
+        //Checks if Employee document date is Date
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getDocDate())){
+            Date docDate = ValidationUtils.checksFieldOnNotDate(inView.getDocDate(), "docDate");
+            //Set Employee registration date
+            worker.setDocDate(docDate);
+        }
+
+        //Checks if Country with citizenship code request field exists and citizenship code is Long
+        Country country = checkCountryExistOnCitizenshipCode(inView.getCitizenshipCode());
+        //Set Country
+        worker.setCountry(country);
+
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void deleteById(String id) {
+
+        ValidationUtils.checkFieldOnNullAndNotLong(id, "id");
+
+        Worker worker = dao.loadById(Long.parseLong(id));
+
+        ValidationUtils.checkEntityExists(worker, "Employee", id);
+
+        dao.deleteById(worker);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public WorkerIdOutView save(WorkerSaveView inView) {
+
+        Worker worker = new Worker();
+
+        //Obligatory part
+
+        //Checks if Office id request field is not null and is Long
+        ValidationUtils.checkFieldOnNullAndNotLong(inView.getOfficeId(), "officeId");
+
+        Office office = officeDAO.loadById(Long.parseLong(inView.getOfficeId()));
+
+        //Checks if Office exist
+        if (office == null)
+            throw new EntityDoesNotExistException("Office", inView.getOfficeId());
+
+        //Set office
+        worker.setOffice(office);
+
+        //Set Employee first name
+        ValidationUtils.checkFieldOnNullOrEmpty(inView.getFirstName(), "firstName");
+        worker.setFirstName(inView.getFirstName());
+
+        //Set Employee last name
+        ValidationUtils.checkFieldOnNullOrEmpty(inView.getSecondName(), "secondName");
+        worker.setLastName(inView.getSecondName());
+
+        //Set Employee Doc Type code
+        Doc doc = checksDocExistOnDocNumber(inView.getDocCode());
+        worker.setDoc(doc);
+
+        //Set Employee document number
+        
+
+        //Set Employee document date
+
+        //Optional part
+
+        //Set Employee middle name
+
+        //Set Employee position
+
+        //Set Employee salary
+
+        //Set Employee registration date
+
+        //Set Employee phone number
+
+        dao.save(worker);
+
+        return new WorkerIdOutView(worker.getId().toString());
     }
 }
