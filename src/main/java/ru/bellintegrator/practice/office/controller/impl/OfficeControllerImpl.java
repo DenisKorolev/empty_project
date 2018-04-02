@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.bellintegrator.practice.common.exception.FieldIsNotBooleanException;
 import ru.bellintegrator.practice.common.exception.FieldIsNotLongException;
+import ru.bellintegrator.practice.common.util.ValidationUtils;
 import ru.bellintegrator.practice.common.view.ResultView;
 import ru.bellintegrator.practice.office.controller.OfficeController;
 import ru.bellintegrator.practice.common.exception.RequiredFieldIsNullException;
@@ -50,7 +51,7 @@ public class OfficeControllerImpl implements OfficeController {
 
         //Checks if isActive boolean
         if ((officeView.isActive != null) && (!officeView.isActive.isEmpty()))
-            if (!WebRestControllerAdvice.isStringBoolean(officeView.isActive))
+            if (!ValidationUtils.isStringBoolean(officeView.isActive))
                 throw new FieldIsNotBooleanException("isActive");
 
         return officeService.filterByOrgId(officeView);
@@ -99,7 +100,7 @@ public class OfficeControllerImpl implements OfficeController {
 
         //Checks if isActive request field is boolean
         if ((officeView.getIsActive() != null) && (!officeView.getIsActive().isEmpty()))
-            if (!WebRestControllerAdvice.isStringBoolean(officeView.getIsActive()))
+            if (!ValidationUtils.isStringBoolean(officeView.getIsActive()))
                 throw new FieldIsNotBooleanException("isActive");
 
         officeService.updateById(officeView);
@@ -158,7 +159,7 @@ public class OfficeControllerImpl implements OfficeController {
 
         //Checks if isActive request field is boolean
         if ((officeView.getActive() != null) && (!officeView.getActive().isEmpty()))
-            if (!WebRestControllerAdvice.isStringBoolean(officeView.getActive()))
+            if (!ValidationUtils.isStringBoolean(officeView.getActive()))
                 throw new FieldIsNotBooleanException("isActive");
 
         return officeService.save(officeView);

@@ -7,6 +7,7 @@ import ru.bellintegrator.practice.common.advice.WebRestControllerAdvice;
 import ru.bellintegrator.practice.common.exception.FieldIsNotBooleanException;
 import ru.bellintegrator.practice.common.exception.FieldIsNotLongException;
 import ru.bellintegrator.practice.common.exception.RequiredFieldIsNullException;
+import ru.bellintegrator.practice.common.util.ValidationUtils;
 import ru.bellintegrator.practice.common.view.ResultView;
 import ru.bellintegrator.practice.organization.controller.OrganizationController;
 import ru.bellintegrator.practice.organization.service.OrganizationService;
@@ -43,7 +44,7 @@ public class OrganizationControllerImpl implements OrganizationController {
 
         //Checks if isActive request field is boolean
         if ((inView.getActive() != null) && (!inView.getActive().isEmpty()))
-            if (!WebRestControllerAdvice.isStringBoolean(inView.getActive()))
+            if (!ValidationUtils.isStringBoolean(inView.getActive()))
                 throw new FieldIsNotBooleanException("isActive");
 
         return orgService.filterByName(inView);
@@ -92,7 +93,7 @@ public class OrganizationControllerImpl implements OrganizationController {
 
         //Checks if isActive request field is boolean
         if ((inView.getActive() != null) && (!inView.getActive().isEmpty()))
-            if (!WebRestControllerAdvice.isStringBoolean(inView.getActive()))
+            if (!ValidationUtils.isStringBoolean(inView.getActive()))
                 throw new FieldIsNotBooleanException("isActive");
 
         orgService.updateById(inView);
@@ -126,7 +127,7 @@ public class OrganizationControllerImpl implements OrganizationController {
 
         //Checks if isActive request field is boolean
         if ((inView.getActive() != null) && (!inView.getActive().isEmpty()))
-            if (!WebRestControllerAdvice.isStringBoolean(inView.getActive()))
+            if (!ValidationUtils.isStringBoolean(inView.getActive()))
                 throw new FieldIsNotBooleanException("isActive");
 
         return orgService.save(inView);

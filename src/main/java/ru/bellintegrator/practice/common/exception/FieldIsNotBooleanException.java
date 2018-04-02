@@ -1,6 +1,7 @@
 package ru.bellintegrator.practice.common.exception;
 
-public class FieldIsNotBooleanException extends RuntimeException {
+@Deprecated
+public class FieldIsNotBooleanException extends ValidationException  {
     public FieldIsNotBooleanException(String fieldName){
         super("Field " + fieldName + " must be boolean!");
     }
