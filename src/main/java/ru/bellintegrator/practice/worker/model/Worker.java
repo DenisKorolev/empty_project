@@ -12,7 +12,7 @@ import java.util.Date;
 public class Worker {
     @Id
     @GeneratedValue
-    @Column(name = "user_id")
+    @Column(name = "worker_id")
     private Long id;
 
     public Long getId() {
