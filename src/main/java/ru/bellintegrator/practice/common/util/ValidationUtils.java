@@ -59,7 +59,7 @@ public class ValidationUtils {
         }
     }
 
-    public static Date checksFieldOnNotDate(String field, String fieldName){
+    public static Date checkFieldOnNotDate(String field, String fieldName){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
         Date date;

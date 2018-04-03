@@ -104,7 +104,8 @@ public class WorkerServiceImpl implements WorkerService{
         Country country = checkCountryExistOnCitizenshipCode(inView.getCitizenshipCode());
 
         //Set Country
-        worker.setCountry(country);
+        if (country != null)
+            worker.setCountry(country);
 
 
         //Set Office
@@ -128,8 +129,10 @@ public class WorkerServiceImpl implements WorkerService{
 
         for (Worker workerLoop:all){
 
-            String fullName = workerLoop.getLastName() + " " + workerLoop.getFirstName() +
-                    " " + workerLoop.getMiddleName();
+            String fullName = workerLoop.getLastName() + " " + workerLoop.getFirstName();
+
+            if (!ValidationUtils.isStringNullOrEmpty(workerLoop.getMiddleName()))
+                fullName = fullName + " " + workerLoop.getMiddleName();
 
             WorkerFilterOutView outView = new WorkerFilterOutView(workerLoop.getId().toString(), fullName, workerLoop.getPosition(),
                     workerLoop.getOffice().getOfficeName());
@@ -155,12 +158,39 @@ public class WorkerServiceImpl implements WorkerService{
         //Checks if Employee exists
         ValidationUtils.checkEntityExists(worker, "Employee", id);
 
+        String middleName = null;
 
-        WorkerView view = new WorkerView(worker.getId().toString(), worker.getOffice().getId().toString(), worker.getFirstName(),
-                worker.getLastName(), worker.getMiddleName(), worker.getPosition(), String.format("%.2f", worker.getSalary()),
-                new SimpleDateFormat("yyyy-MM-dd").format(worker.getRegistrationDate()), worker.getPhone(), worker.getDoc().getDocNumber(),
-                worker.getDoc().getDocName(), worker.getDocNumber(), new SimpleDateFormat("yyyy-MM-dd").format(worker.getDocDate()),
-                worker.getCountry().getCountryCode().toString(), worker.getCountry().getCountryName());
+        String position = null;
+
+        String salary = null;
+        if (worker.getSalary() != null)
+            salary = String.format("%.2f", worker.getSalary());
+
+        String regDate = null;
+        if (worker.getRegistrationDate() != null)
+            regDate = new SimpleDateFormat("yyyy-MM-dd").format(worker.getRegistrationDate());
+
+        String phone = null;
+
+        String docDate = null;
+        if (worker.getDocDate() != null)
+            docDate = new SimpleDateFormat("yyyy-MM-dd").format(worker.getDocDate());
+
+        String countryCode = null;
+        String countryName = null;
+        if (worker.getCountry() != null) {
+            countryCode = worker.getCountry().getCountryCode().toString();
+            countryName = worker.getCountry().getCountryName();
+        }
+
+
+
+
+
+        WorkerView view = new WorkerView(worker.getId().toString(), worker.getOffice().getId().toString(),
+                worker.getFirstName(), worker.getLastName(), worker.getMiddleName(), worker.getPosition(), salary,
+                regDate, worker.getPhone(), worker.getDoc().getDocNumber(), worker.getDoc().getDocName(),
+                worker.getDocNumber(), docDate, countryCode, countryName);
 
         log.info(view.toString());
 
@@ -212,7 +242,7 @@ public class WorkerServiceImpl implements WorkerService{
 
         //Checks if Employee registration date is Date
         if (!ValidationUtils.isStringNullOrEmpty(inView.getRegistrationDate())){
-            Date registrationDate = ValidationUtils.checksFieldOnNotDate(inView.getRegistrationDate(), "registrationDate");
+            Date registrationDate = ValidationUtils.checkFieldOnNotDate(inView.getRegistrationDate(), "registrationDate");
             //Set Employee registration date
             worker.setRegistrationDate(registrationDate);
         }
@@ -250,7 +280,7 @@ public class WorkerServiceImpl implements WorkerService{
 
         //Checks if Employee document date is Date
         if (!ValidationUtils.isStringNullOrEmpty(inView.getDocDate())){
-            Date docDate = ValidationUtils.checksFieldOnNotDate(inView.getDocDate(), "docDate");
+            Date docDate = ValidationUtils.checkFieldOnNotDate(inView.getDocDate(), "docDate");
             //Set Employee registration date
             worker.setDocDate(docDate);
         }
@@ -258,7 +288,8 @@ public class WorkerServiceImpl implements WorkerService{
         //Checks if Country with citizenship code request field exists and citizenship code is Long
         Country country = checkCountryExistOnCitizenshipCode(inView.getCitizenshipCode());
         //Set Country
-        worker.setCountry(country);
+        if (country != null)
+            worker.setCountry(country);
 
 
     }
@@ -288,6 +319,7 @@ public class WorkerServiceImpl implements WorkerService{
 
         Worker worker = new Worker();
 
+
         //Obligatory part
 
         //Checks if Office id request field is not null and is Long
@@ -315,21 +347,45 @@ public class WorkerServiceImpl implements WorkerService{
         worker.setDoc(doc);
 
         //Set Employee document number
-        
+        ValidationUtils.checkFieldOnNullOrEmpty(inView.getDocNumber(), "docNumber");
+        worker.setDocNumber(inView.getDocNumber());
 
         //Set Employee document date
+        ValidationUtils.checkFieldOnNullOrEmpty(inView.getDocDate(), "docDate");
+        Date docDate = ValidationUtils.checkFieldOnNotDate(inView.getDocDate(), "docDate");
+        worker.setDocDate(docDate);
+
 
         //Optional part
 
         //Set Employee middle name
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getMiddleName()))
+            worker.setMiddleName(inView.getMiddleName());
 
         //Set Employee position
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getPosition()))
+            worker.setPosition(inView.getPosition());
 
         //Set Employee salary
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getSalary())){
+            ValidationUtils.checkFieldOnNotFloat(inView.getSalary(), "salary");
+            worker.setSalary(Float.parseFloat(inView.getSalary()));
+        }
 
         //Set Employee registration date
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getRegistrationDate())){
+            Date regDate = ValidationUtils.checkFieldOnNotDate(inView.getRegistrationDate(), "registrationDate");
+            worker.setRegistrationDate(regDate);
+        }
 
         //Set Employee phone number
+        if (!ValidationUtils.isStringNullOrEmpty(inView.getPhone()))
+            worker.setPhone(inView.getPhone());
+
+        //Set country
+        Country country = checkCountryExistOnCitizenshipCode(inView.getCitizenshipCode());
+        if (country != null)
+            worker.setCountry(country);
 
         dao.save(worker);
 
