@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.common.exception.EntityDoesNotExistException;
 import ru.bellintegrator.practice.common.exception.FieldIsNotDataTypeException;
-import ru.bellintegrator.practice.common.exception.OrgDoesNotExistException;
 import ru.bellintegrator.practice.common.exception.RequiredFieldIsNullException;
 import ru.bellintegrator.practice.common.util.ValidationUtils;
 import ru.bellintegrator.practice.office.dao.OfficeDAO;
@@ -17,7 +16,6 @@ import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.office.service.OfficeService;
 import ru.bellintegrator.practice.office.view.*;
 import ru.bellintegrator.practice.organization.dao.OrganizationDAO;
-import ru.bellintegrator.practice.organization.dao.impl.OrganizationDAOImpl;
 import ru.bellintegrator.practice.organization.model.Organization;
 
 import java.util.ArrayList;

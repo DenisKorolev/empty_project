@@ -8,7 +8,9 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.common.exception.EntityDoesNotExistException;
-import ru.bellintegrator.practice.common.exception.OrgDoesNotExistException;
+import ru.bellintegrator.practice.common.exception.FieldIsNotDataTypeException;
+import ru.bellintegrator.practice.common.exception.RequiredFieldIsNullException;
+import ru.bellintegrator.practice.common.util.ValidationUtils;
 import ru.bellintegrator.practice.office.dao.OfficeDAO;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.organization.dao.OrganizationDAO;
@@ -40,6 +42,18 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional
     public List<OrganizationFilterOutView> filterByName(OrganizationFilterInView inView) {
+
+        //Validation
+        //Checks if Org name request field is not null
+        if ((inView.getName() == null) || (inView.getName().isEmpty()))
+            throw new RequiredFieldIsNullException("name");
+
+        //Checks if isActive request field is boolean
+        if ((inView.getActive() != null) && (!inView.getActive().isEmpty()))
+            if (!ValidationUtils.isStringBoolean(inView.getActive()))
+                throw new FieldIsNotDataTypeException("isActive", "Boolean");
+
+
         Organization org = new Organization();
 
         //Set Org name
@@ -78,6 +92,20 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional
     public OrganizationView loadById(String id) {
+
+        //Validation
+        //Checks if Org id request field is not null
+        if ((id == null) || (id.isEmpty()))
+            throw new RequiredFieldIsNullException("id");
+        //Checks if Org id request filed is Long
+        try {
+            Long.parseLong(id);
+        }
+        catch (Exception ex){
+            throw new FieldIsNotDataTypeException("id", "Long");
+        }
+
+
         Organization org = dao.loadById(Long.parseLong(id));
 
         //Checks if Org exist
@@ -95,6 +123,25 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional
     public void updateById(OrganizationView inView) {
+
+        //Validation
+        //Checks if id request field is not null
+        if ((inView.getId() == null) || (inView.getId().isEmpty()))
+            throw new RequiredFieldIsNullException("id");
+        //Checks if id request field is Long
+        try {
+            Long.parseLong(inView.getId());
+        }
+        catch (Exception ex){
+            throw new FieldIsNotDataTypeException("id", "Long");
+        }
+
+        //Checks if isActive request field is boolean
+        if ((inView.getActive() != null) && (!inView.getActive().isEmpty()))
+            if (!ValidationUtils.isStringBoolean(inView.getActive()))
+                throw new FieldIsNotDataTypeException("isActive", "Boolean");
+
+
         Organization org = dao.loadById(Long.parseLong(inView.getId()));
 
         //Checks if Org exist
@@ -127,6 +174,30 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional
     public OrganizationIdOutView save(OrganizationSaveView inView) {
+
+        //Validation
+        //Checks if full name request field is not null
+        if ((inView.getFullName() == null) || (inView.getFullName().isEmpty()))
+            throw new RequiredFieldIsNullException("fullName");
+
+        //Checks if inn request field is not null
+        if ((inView.getInn() == null) || (inView.getInn().isEmpty()))
+            throw new RequiredFieldIsNullException("inn");
+
+        //Checks if kpp request field is not null
+        if ((inView.getKpp() == null) || (inView.getKpp().isEmpty()))
+            throw new RequiredFieldIsNullException("kpp");
+
+        //Checks if address request field is not null
+        if ((inView.getAddress() == null) || (inView.getAddress().isEmpty()))
+            throw new RequiredFieldIsNullException("address");
+
+        //Checks if isActive request field is boolean
+        if ((inView.getActive() != null) && (!inView.getActive().isEmpty()))
+            if (!ValidationUtils.isStringBoolean(inView.getActive()))
+                throw new FieldIsNotDataTypeException("isActive", "Boolean");
+
+
         Organization org = new Organization();
 
         //Obligatory part
@@ -165,6 +236,19 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     @Transactional
     public void deleteById(String id) {
+
+        //Validation
+        //Checks if Org id request field is not null
+        if ((id == null) || (id.isEmpty()))
+            throw new RequiredFieldIsNullException("id");
+        //Checks if Org id request filed is Long
+        try {
+            Long.parseLong(id);
+        }
+        catch (Exception ex){
+            throw new FieldIsNotDataTypeException("id", "Long");
+        }
+
         Organization org = dao.loadById(Long.parseLong(id));
 
         //Checks if Org exist

@@ -2,7 +2,6 @@ package ru.bellintegrator.practice.common.util;
 
 import ru.bellintegrator.practice.common.exception.EntityDoesNotExistException;
 import ru.bellintegrator.practice.common.exception.FieldIsNotDataTypeException;
-import ru.bellintegrator.practice.common.exception.FieldIsNotLongException;
 import ru.bellintegrator.practice.common.exception.RequiredFieldIsNullException;
 
 import java.text.ParseException;
