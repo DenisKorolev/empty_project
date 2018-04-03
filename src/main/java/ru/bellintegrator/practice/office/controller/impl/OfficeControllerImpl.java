@@ -38,22 +38,6 @@ public class OfficeControllerImpl implements OfficeController {
     @RequestMapping(value = "/list", method = {POST})
     public List<OfficeFilterOutView> filterByOrgId(@RequestBody OfficeFilterView officeView) {
 
-        //Checks if orgId request field is not null
-        if ((officeView.orgId == null) || (officeView.orgId.isEmpty()))
-            throw new RequiredFieldIsNullException("orgId");
-        //Checks if id request field is Long
-        try {
-            Long.parseLong(officeView.orgId);
-        }
-        catch (Exception ex){
-            throw new FieldIsNotLongException("id");
-        }
-
-        //Checks if isActive boolean
-        if ((officeView.isActive != null) && (!officeView.isActive.isEmpty()))
-            if (!ValidationUtils.isStringBoolean(officeView.isActive))
-                throw new FieldIsNotBooleanException("isActive");
-
         return officeService.filterByOrgId(officeView);
     }
 
@@ -65,18 +49,7 @@ public class OfficeControllerImpl implements OfficeController {
     @RequestMapping(value = "/{id}", method = {GET})
     public OfficeView loadById(@PathVariable(value = "id") String id) {
 
-        //Checks if id request field is not null
-        if ((id == null) || id.isEmpty())
-            throw new RequiredFieldIsNullException("id");
-        //Checks if id request field is Long
-        try {
-            Long.parseLong(id);
-        }
-        catch (Exception ex){
-            throw new FieldIsNotLongException("id");
-        }
-
-        return officeService.loadById(Long.parseLong(id));
+        return officeService.loadById(id);
     }
 
     /**
@@ -86,22 +59,6 @@ public class OfficeControllerImpl implements OfficeController {
     @ApiOperation(value = "Updates Office by id", httpMethod = "POST")
     @RequestMapping(value = "/update", method = {POST})
     public ResultView updateById(@RequestBody OfficeView officeView) {
-
-        //Checks if id request field is not null
-        if ((officeView.getId() == null) || (officeView.getId().isEmpty()))
-            throw new RequiredFieldIsNullException("id");
-        //Checks if id request field is Long
-        try {
-            Long.parseLong(officeView.getId());
-        }
-        catch (Exception ex){
-            throw new FieldIsNotLongException("id");
-        }
-
-        //Checks if isActive request field is boolean
-        if ((officeView.getIsActive() != null) && (!officeView.getIsActive().isEmpty()))
-            if (!ValidationUtils.isStringBoolean(officeView.getIsActive()))
-                throw new FieldIsNotBooleanException("isActive");
 
         officeService.updateById(officeView);
         return new ResultView("success");
@@ -115,18 +72,7 @@ public class OfficeControllerImpl implements OfficeController {
     @RequestMapping(value = "/delete/{id}", method = {POST})
     public ResultView deleteById(@PathVariable(value = "id") String id) {
 
-        //Checks if id request field is not null
-        if ((id == null) || id.isEmpty())
-            throw new RequiredFieldIsNullException("id");
-        //Checks if id request field is Long
-        try {
-            Long.parseLong(id);
-        }
-        catch (Exception ex){
-            throw new FieldIsNotLongException("id");
-        }
-
-        officeService.deleteById(Long.parseLong(id));
+        officeService.deleteById(id);
         return new ResultView("success");
     }
 
@@ -137,30 +83,6 @@ public class OfficeControllerImpl implements OfficeController {
     @ApiOperation(value = "Adds new Office", httpMethod = "POST")
     @RequestMapping(value = "/create", method = {POST})
     public OfficeIdOutView save(@RequestBody OfficeIdView officeView) {
-
-        //Checks if name request field is not null
-        if ((officeView.getName() == null) || officeView.getName().isEmpty())
-            throw new RequiredFieldIsNullException("name");
-
-        //Checks if orgId request field is not null
-        if ((officeView.getOrgId() == null) || officeView.getOrgId().isEmpty())
-            throw new RequiredFieldIsNullException("orgId");
-        //Checks if orgId request field is Long
-        try {
-            Long.parseLong(officeView.getOrgId());
-        }
-        catch (Exception ex){
-            throw new FieldIsNotLongException("orgId");
-        }
-
-        //Checks if address request field is not null
-        if ((officeView.getAddress() == null) || officeView.getAddress().isEmpty())
-            throw new RequiredFieldIsNullException("name");
-
-        //Checks if isActive request field is boolean
-        if ((officeView.getActive() != null) && (!officeView.getActive().isEmpty()))
-            if (!ValidationUtils.isStringBoolean(officeView.getActive()))
-                throw new FieldIsNotBooleanException("isActive");
 
         return officeService.save(officeView);
     }

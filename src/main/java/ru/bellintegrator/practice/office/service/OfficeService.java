@@ -18,7 +18,7 @@ public interface OfficeService {
      * @param id Office id
      * @return JSON Office value
      */
-    OfficeView loadById(Long id);
+    OfficeView loadById(String id);
 
     /**
      * Updates Office in DB
@@ -30,7 +30,7 @@ public interface OfficeService {
      * Deletes Office by id
      * @param id Office id
      */
-    void deleteById(Long id);
+    void deleteById(String id);
 
     /**
      * Adds Office to db

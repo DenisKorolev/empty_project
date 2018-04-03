@@ -8,7 +8,10 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.common.exception.EntityDoesNotExistException;
+import ru.bellintegrator.practice.common.exception.FieldIsNotDataTypeException;
 import ru.bellintegrator.practice.common.exception.OrgDoesNotExistException;
+import ru.bellintegrator.practice.common.exception.RequiredFieldIsNullException;
+import ru.bellintegrator.practice.common.util.ValidationUtils;
 import ru.bellintegrator.practice.office.dao.OfficeDAO;
 import ru.bellintegrator.practice.office.model.Office;
 import ru.bellintegrator.practice.office.service.OfficeService;
@@ -44,8 +47,27 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public List<OfficeFilterOutView> filterByOrgId(OfficeFilterView officeView) {
+
+        //Validation
+        //Checks if orgId request field is not null
+        if ((officeView.orgId == null) || (officeView.orgId.isEmpty()))
+            throw new RequiredFieldIsNullException("orgId");
+        //Checks if id request field is Long
+        try {
+            Long.parseLong(officeView.orgId);
+        }
+        catch (Exception ex){
+            throw new FieldIsNotDataTypeException("id", "Long");
+        }
+
+        //Checks if isActive boolean
+        if ((officeView.isActive != null) && (!officeView.isActive.isEmpty()))
+            if (!ValidationUtils.isStringBoolean(officeView.isActive))
+                throw new FieldIsNotDataTypeException("isActive", "Boolean");
+
+
         Organization org = orgDAO.loadById(Long.parseLong(officeView.orgId));
-        if (org == null) throw new OrgDoesNotExistException(officeView.orgId);
+        if (org == null) throw new EntityDoesNotExistException("Organization", officeView.orgId);
 
         Organization organization = new Organization();
         organization.setId(Long.parseLong(officeView.orgId));
@@ -77,8 +99,25 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public OfficeView loadById(Long id) {
-        Office office = dao.loadById(id);
+    public OfficeView loadById(String id) {
+
+        //Validation
+        //Checks if id request field is not null
+        if ((id == null) || id.isEmpty())
+            throw new RequiredFieldIsNullException("id");
+        //Checks if id request field is Long
+        try {
+            Long.parseLong(id);
+        }
+        catch (Exception ex){
+            throw new FieldIsNotDataTypeException("id", "Long");
+        }
+
+
+        Office office = dao.loadById(Long.parseLong(id));
+
+        //Checks if Office exists
+        ValidationUtils.checkEntityExists(office, "Office", id);
 
         OfficeView view = new OfficeView(office.getId().toString(), office.getOrganization().getId().toString(),
                 office.getOfficeName(), office.getOfficeAddress(), office.getOfficePhone(), office.getOfficeActive().toString());
@@ -94,6 +133,25 @@ public class OfficeServiceImpl implements OfficeService {
     @Override
     @Transactional
     public void updateById(OfficeView officeView) {
+
+        //Validation
+        //Checks if id request field is not null
+        if ((officeView.getId() == null) || (officeView.getId().isEmpty()))
+            throw new RequiredFieldIsNullException("id");
+        //Checks if id request field is Long
+        try {
+            Long.parseLong(officeView.getId());
+        }
+        catch (Exception ex){
+            throw new FieldIsNotDataTypeException("id", "Long");
+        }
+
+        //Checks if isActive request field is boolean
+        if ((officeView.getIsActive() != null) && (!officeView.getIsActive().isEmpty()))
+            if (!ValidationUtils.isStringBoolean(officeView.getIsActive()))
+                throw new FieldIsNotDataTypeException("isActive", "Boolean");
+
+
         Office office = dao.loadById(Long.parseLong(officeView.getId()));
         //Checks if Office exists
         if (office == null)
@@ -118,12 +176,26 @@ public class OfficeServiceImpl implements OfficeService {
      */
     @Override
     @Transactional
-    public void deleteById(Long id) {
-        Office office = dao.loadById(id);
+    public void deleteById(String id) {
+
+        //Validation
+        //Checks if id request field is not null
+        if ((id == null) || id.isEmpty())
+            throw new RequiredFieldIsNullException("id");
+        //Checks if id request field is Long
+        try {
+            Long.parseLong(id);
+        }
+        catch (Exception ex){
+            throw new FieldIsNotDataTypeException("id", "Long");
+        }
+
+
+        Office office = dao.loadById(Long.parseLong(id));
 
         //Checks if Office exists
         if (office == null)
-            throw new EntityDoesNotExistException("Office", id.toString());
+            throw new EntityDoesNotExistException("Office", id);
 
         dao.deleteById(office);
     }
@@ -135,11 +207,37 @@ public class OfficeServiceImpl implements OfficeService {
     @Transactional
     public OfficeIdOutView save(OfficeIdView officeView) {
 
+        //Validation
+        //Checks if name request field is not null
+        if ((officeView.getName() == null) || officeView.getName().isEmpty())
+            throw new RequiredFieldIsNullException("name");
+
+        //Checks if orgId request field is not null
+        if ((officeView.getOrgId() == null) || officeView.getOrgId().isEmpty())
+            throw new RequiredFieldIsNullException("orgId");
+        //Checks if orgId request field is Long
+        try {
+            Long.parseLong(officeView.getOrgId());
+        }
+        catch (Exception ex){
+            throw new FieldIsNotDataTypeException("orgId", "Long");
+        }
+
+        //Checks if address request field is not null
+        if ((officeView.getAddress() == null) || officeView.getAddress().isEmpty())
+            throw new RequiredFieldIsNullException("name");
+
+        //Checks if isActive request field is boolean
+        if ((officeView.getActive() != null) && (!officeView.getActive().isEmpty()))
+            if (!ValidationUtils.isStringBoolean(officeView.getActive()))
+                throw new FieldIsNotDataTypeException("isActive", "Boolean");
+
+
         Office office = new Office();
 
         Organization org = orgDAO.loadById(Long.parseLong(officeView.getOrgId()));
         if (org == null)
-            throw new OrgDoesNotExistException(officeView.getOrgId());
+            throw new EntityDoesNotExistException("Organization", officeView.getOrgId());
 
         //Obligatory part
         //Set Office name
