@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -63,5 +64,37 @@ public class UserDAOImpl implements UserDAO {
         TypedQuery<User> query = em.createQuery(criteria);
 
         return query.getSingleResult();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User loadByLogin(String login) {
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE LOWER(u.login) LIKE LOWER(:login)", User.class);
+        query.setParameter("login", login);
+
+        List<User> results = query.getResultList();
+        User user = null;
+        if(!results.isEmpty())
+            user = results.get(0);
+
+        return user;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User loadByEmail(String email) {
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE LOWER(u.email) LIKE LOWER(:email)", User.class);
+        query.setParameter("email", email);
+
+        List<User> results = query.getResultList();
+        User user = null;
+        if(!results.isEmpty())
+            user = results.get(0);
+
+        return user;
     }
 }

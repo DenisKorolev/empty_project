@@ -72,6 +72,21 @@ public class User {
 
 
     /**
+     * User email
+     */
+    @Basic(optional = false)
+    @Column(name = "email")
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
      * Field to identify whether user was verified after registration or not
      */
     @Basic(optional = false)

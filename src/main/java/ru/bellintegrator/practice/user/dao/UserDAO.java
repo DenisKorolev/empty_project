@@ -8,14 +8,14 @@ public interface UserDAO {
      * Adds (registers) user to DB
      * @param user User object to add
      */
-    public void save(User user);
+    void save(User user);
 
     /**
      * Gets User object by hash
      * @param hash User activation hash
      * @return User object if any
      */
-    public User loadByHash(String hash);
+    User loadByHash(String hash);
 
     /**
      * Gets User object by login and password
@@ -23,5 +23,19 @@ public interface UserDAO {
      * @param password User password
      * @return User object if any
      */
-    public User loadByAccount(String login, String password);
+    User loadByAccount(String login, String password);
+
+    /**
+     * Gets User object by login
+     * @param login User login
+     * @return User object if any
+     */
+    User loadByLogin(String login);
+
+    /**
+     * Gets User object by email
+     * @param email User email
+     * @return User object if any
+     */
+    User loadByEmail(String email);
 }

@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS User (
     login VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(50) NOT NULL,
     user_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
     is_user_active BOOLEAN NOT NULL,
     activation_hash VARCHAR(50) UNIQUE
 );

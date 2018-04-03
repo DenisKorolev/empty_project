@@ -75,4 +75,9 @@ public class ValidationUtils {
         if (entity == null)
             throw new EntityDoesNotExistException(entityName, entityId);
     }
+
+    public static void checkEntityExists(Object entity, String entityName, String entityParameterName, String entityParameter){
+        if (entity == null)
+            throw new EntityDoesNotExistException(entityName, entityParameterName, entityParameter);
+    }
 }
