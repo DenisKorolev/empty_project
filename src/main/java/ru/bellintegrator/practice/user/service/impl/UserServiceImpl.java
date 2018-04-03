@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         newUser.setLogin(inView.getLogin());
 
         ValidationUtils.checkFieldOnNullOrEmpty(inView.getEmail(), "email");
-        if (!EmailValidator.getInstance().isValid(inView.getEmail()))
+        if (EmailValidator.getInstance().isValid(inView.getEmail()) == false)
             throw new FieldIsNotDataTypeException("email", "Email type");
 
         user = dao.loadByEmail(inView.getEmail());
