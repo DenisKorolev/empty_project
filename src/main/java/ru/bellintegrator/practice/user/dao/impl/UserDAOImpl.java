@@ -34,6 +34,7 @@ public class UserDAOImpl implements UserDAO {
      * {@inheritDoc}
      */
     @Override
+    @Deprecated
     public User loadByHash(String hash) {
         CriteriaBuilder builder = em.getCriteriaBuilder();
         CriteriaQuery<User> criteria = builder.createQuery(User.class);
@@ -76,7 +77,7 @@ public class UserDAOImpl implements UserDAO {
 
         List<User> results = query.getResultList();
         User user = null;
-        if(!results.isEmpty())
+        if (!results.isEmpty())
             user = results.get(0);
 
         return user;
@@ -92,7 +93,23 @@ public class UserDAOImpl implements UserDAO {
 
         List<User> results = query.getResultList();
         User user = null;
-        if(!results.isEmpty())
+        if (!results.isEmpty())
+            user = results.get(0);
+
+        return user;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public User loadByActivationHash(String activationHash) {
+        TypedQuery<User> query = em.createQuery("SELECT u FROM User u WHERE u.activationHash = :activationHash", User.class);
+        query.setParameter("activationHash", activationHash);
+
+        List<User> results = query.getResultList();
+        User user = null;
+        if (!results.isEmpty())
             user = results.get(0);
 
         return user;

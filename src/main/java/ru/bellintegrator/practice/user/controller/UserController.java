@@ -1,5 +1,6 @@
 package ru.bellintegrator.practice.user.controller;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import ru.bellintegrator.practice.common.view.ResultView;
 import ru.bellintegrator.practice.user.view.UserRegisterView;
@@ -12,4 +13,11 @@ public interface UserController {
      * @return result
      */
     ResultView register(@RequestBody UserRegisterView inView);
+
+    /**
+     * Activates User by hashcode
+     * @param hashCode activation hash code
+     * @return result
+     */
+    ResultView activate(@PathVariable(value = "hashCode") String hashCode);
 }

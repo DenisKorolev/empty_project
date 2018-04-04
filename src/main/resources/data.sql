@@ -91,3 +91,14 @@ INSERT INTO WORKER VALUES (3, 0, 1, 4, 2, 'Имя 3', 'Фамилия 3', 'От�
 
 INSERT INTO WORKER VALUES (4, 0, 2, 10, 1, 'Имя 4', 'Фамилия 4', 'Отчество 4', 'Должность 4', 25090.01, '2016-11-06',
                            '79191134911', '12331757', '2018-10-25');
+
+
+INSERT INTO USER (id, version, login, password, user_name, email, is_user_active, activation_hash)
+    VALUES (1, 0, 'TestUser', '7bcf9d89298f1bfae16fa02ed6b61908fd2fa8de45dd8e2153a3c47300765328', 'TestUserName',
+            'email@mail.ru', false, '3b8b85888c20204b56a3c52638936c5cdeabc0b5c1c6a024934f8d14922f6b79');
+
+INSERT INTO USER VALUES (2, 0, 'TestUser2', '7bcf9d89298f1bfae16fa02ed6b61908fd2fa8de45dd8e2153a3c47300765328', 'TestUserName',
+                         'email2@mail.ru', true, null);
+
+INSERT INTO USER VALUES (3, 0, 'TestUser3', '7bcf9d89298f1bfae16fa02ed6b61908fd2fa8de45dd8e2153a3c47300765328', 'TestUserName',
+                         'email3@mail.ru', true, null);

@@ -6,17 +6,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bellintegrator.practice.common.exception.EntityDoesNotExistException;
 import ru.bellintegrator.practice.common.exception.EntityExistsException;
 import ru.bellintegrator.practice.common.exception.FieldIsNotDataTypeException;
 import ru.bellintegrator.practice.common.util.ValidationUtils;
 import ru.bellintegrator.practice.user.dao.UserDAO;
 import ru.bellintegrator.practice.user.model.User;
 import ru.bellintegrator.practice.user.service.UserService;
+import ru.bellintegrator.practice.user.view.UserLoginView;
 import ru.bellintegrator.practice.user.view.UserRegisterView;
 
 
 
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -69,10 +72,36 @@ public class UserServiceImpl implements UserService {
         newUser.setUserActive(false);
 
         //Set User activation hash
-        String userHashData = inView.getLogin() + " " + inView.getEmail() + " " + inView.getName();
+        String userHashData = inView.getLogin() + " " + inView.getEmail() + " " + inView.getName() + new Date(System.currentTimeMillis());
         String userActivationHash = Hashing.sha256().hashString(userHashData, StandardCharsets.UTF_8).toString();
         newUser.setActivationHash(userActivationHash);
 
         dao.save(newUser);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void activate(String hashCode) {
+
+        User user = dao.loadByActivationHash(hashCode);
+        if (user == null)
+            throw new EntityDoesNotExistException("User", "code", hashCode);
+        else {
+            user.setActivationHash(null);
+            user.setUserActive(true);
+        }
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional
+    public void login(UserLoginView inView) {
+
     }
 }

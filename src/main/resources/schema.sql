@@ -65,11 +65,11 @@ CREATE TABLE IF NOT EXISTS User (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     version INTEGER NOT NULL,
     login VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(50) NOT NULL,
+    password VARCHAR(500) NOT NULL,
     user_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     is_user_active BOOLEAN NOT NULL,
-    activation_hash VARCHAR(50) UNIQUE
+    activation_hash VARCHAR(1000) UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS Worker (

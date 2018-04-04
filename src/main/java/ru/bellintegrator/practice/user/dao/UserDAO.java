@@ -38,4 +38,11 @@ public interface UserDAO {
      * @return User object if any
      */
     User loadByEmail(String email);
+
+    /**
+     * Gets User object by activation hash
+     * @param activationHash User activation hash
+     * @return User object if any
+     */
+    User loadByActivationHash(String activationHash);
 }
