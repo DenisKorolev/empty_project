@@ -39,7 +39,7 @@ public class OrganizationDAOImpl implements OrganizationDAO {
         //Org inn
         if ((orgEntity.getInn() != null) && (!orgEntity.getInn().isEmpty()))
             predicates.add(
-                    builder.equal(organization.get("inn"), orgEntity.getInn())
+                    builder.like(builder.upper(organization.get("inn")), ("%" + orgEntity.getInn() + "%").toUpperCase())
             );
         //Is Org active
         if (!(orgEntity.getActive() == null))
@@ -51,11 +51,11 @@ public class OrganizationDAOImpl implements OrganizationDAO {
         //Org name
         if (predicates.isEmpty())
             criteria.where(
-                    builder.equal(organization.get("orgName"), orgEntity.getOrgName())
+                    builder.like(builder.upper(organization.get("orgName")), ("%" + orgEntity.getOrgName() + "%").toUpperCase())
             );
         else {
             predicates.add(
-                    builder.equal(organization.get("orgName"), orgEntity.getOrgName())
+                    builder.like(builder.upper(organization.get("orgName")), ("%" + orgEntity.getOrgName() + "%").toUpperCase())
             );
             criteria.where(builder.and(
                     predicates.toArray(new Predicate[predicates.size()])

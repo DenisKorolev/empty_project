@@ -62,15 +62,15 @@ public class OfficeDAOImpl implements OfficeDAO{
         //Office name
         if ((officeEntity.getOfficeName() != null) && (!officeEntity.getOfficeName().isEmpty()))
             predicates.add(
-                    builder.equal(office.get("officeName"), officeEntity.getOfficeName())
+                    builder.like(builder.upper(office.get("officeName")), ("%" + officeEntity.getOfficeName() + "%").toUpperCase())
             );
         //Office phone
         if ((officeEntity.getOfficePhone() != null) && (!officeEntity.getOfficePhone().isEmpty()))
             predicates.add(
-                    builder.equal(office.get("officePhone"), officeEntity.getOfficePhone())
+                    builder.like(builder.upper(office.get("officePhone")), ("%" + officeEntity.getOfficePhone() +"%").toUpperCase())
             );
         //Is Office active
-        if (!(officeEntity.getOfficeActive() == null))
+        if (officeEntity.getOfficeActive() != null)
             predicates.add(
                     builder.equal(office.get("isOfficeActive"), officeEntity.getOfficeActive())
             );
