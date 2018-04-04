@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.bellintegrator.practice.common.exception.EntityDoesNotExistException;
 import ru.bellintegrator.practice.common.exception.EntityExistsException;
 import ru.bellintegrator.practice.common.exception.FieldIsNotDataTypeException;
+import ru.bellintegrator.practice.common.exception.LoginException;
 import ru.bellintegrator.practice.common.util.ValidationUtils;
 import ru.bellintegrator.practice.user.dao.UserDAO;
 import ru.bellintegrator.practice.user.model.User;
@@ -86,6 +87,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void activate(String hashCode) {
 
+        ValidationUtils.checkFieldOnNullOrEmpty(hashCode, "code");
         User user = dao.loadByActivationHash(hashCode);
         if (user == null)
             throw new EntityDoesNotExistException("User", "code", hashCode);
@@ -103,5 +105,14 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void login(UserLoginView inView) {
 
+        ValidationUtils.checkFieldOnNullOrEmpty(inView.getLogin(), "login");
+        ValidationUtils.checkFieldOnNullOrEmpty(inView.getPassword(), "password");
+        String hashedPassword = Hashing.sha256().hashString(inView.getPassword(), StandardCharsets.UTF_8).toString();
+
+        User user = dao.loadByAccount(inView.getLogin(), hashedPassword);
+        if (user == null)
+            throw new LoginException();
+        else if (user.getUserActive() == false)
+            throw new LoginException(user.getEmail());
     }
 }

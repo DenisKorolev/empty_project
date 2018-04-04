@@ -64,7 +64,12 @@ public class UserDAOImpl implements UserDAO {
 
         TypedQuery<User> query = em.createQuery(criteria);
 
-        return query.getSingleResult();
+        List<User> results = query.getResultList();
+        User userEntity = null;
+        if (!results.isEmpty())
+            userEntity = results.get(0);
+
+        return userEntity;
     }
 
     /**
