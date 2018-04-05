@@ -195,7 +195,8 @@ public class OfficeServiceImpl implements OfficeService {
         if (office == null)
             throw new EntityDoesNotExistException("Office", id);
 
-        dao.deleteById(office);
+        Organization org = office.getOrganization();
+        org.removeOffice(office);
     }
 
     /**
@@ -256,9 +257,9 @@ public class OfficeServiceImpl implements OfficeService {
             office.setOfficeActive(Boolean.parseBoolean(officeView.getActive()));
 
         dao.save(office);
+        org.addOffice(office);
 
         OfficeIdOutView outView = new OfficeIdOutView(office.getId().toString());
-        officeView.setId(office.getId());
         return outView;
     }
 }

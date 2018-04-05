@@ -307,7 +307,8 @@ public class WorkerServiceImpl implements WorkerService{
 
         ValidationUtils.checkEntityExists(worker, "Employee", id);
 
-        dao.deleteById(worker);
+        Office office = worker.getOffice();
+        office.removeWorker(worker);
     }
 
     /**
@@ -388,6 +389,7 @@ public class WorkerServiceImpl implements WorkerService{
             worker.setCountry(country);
 
         dao.save(worker);
+        office.addWorker(worker);
 
         return new WorkerIdOutView(worker.getId().toString());
     }

@@ -51,7 +51,7 @@ public class Office {
     /**
      * Bidirectional OneToMany relationship with Worker table
      */
-    @OneToMany(mappedBy = "office", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "office", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Worker> workers;
 
     public List<Worker> getWorkers() {
