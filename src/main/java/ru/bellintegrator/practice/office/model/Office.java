@@ -62,12 +62,12 @@ public class Office {
     }
 
     public void addWorker(Worker worker){
-        workers.add(worker);
+        getWorkers().add(worker);
         worker.setOffice(this);
     }
 
     public void removeWorker(Worker worker) {
-        workers.remove(worker);
+        getWorkers().remove(worker);
         worker.setOffice(null);
     }
 

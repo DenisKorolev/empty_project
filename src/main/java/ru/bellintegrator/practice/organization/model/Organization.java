@@ -42,12 +42,12 @@ public class Organization {
     }
 
     public void addOffice(Office office){
-        offices.add(office);
+        getOffices().add(office);
         office.setOrganization(this);
     }
 
     public void removeOffice(Office office){
-        offices.remove(office);
+        getOffices().remove(office);
         office.setOrganization(null);
     }
 
