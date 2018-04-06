@@ -15,7 +15,7 @@ public class ResponseControllerAdvice implements ResponseBodyAdvice {
     @Override
     public boolean supports(MethodParameter methodParameter, Class aClass) {
         
-        return true;
+        return false;
     }
 
     @Override
